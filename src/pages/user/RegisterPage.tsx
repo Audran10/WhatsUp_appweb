@@ -18,10 +18,6 @@ const RegisterPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(
-      `Nom: ${name}, Email: ${email}, Téléphone: ${phoneNumber}, Mot de passe: ${password}`
-    );
   };
 
   return (
