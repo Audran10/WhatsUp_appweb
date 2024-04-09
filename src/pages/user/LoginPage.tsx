@@ -3,18 +3,9 @@ import React, { useState } from 'react';
 import InputItem from '../../components/items/InputItem.tsx';
 import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
 
-const RegisterPage: React.FC = () => {
-  const [name, setName] = useState('');
+const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
-
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    if (newValue.length <= 10) {
-      setPhoneNumber(newValue);
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,6 +13,49 @@ const RegisterPage: React.FC = () => {
 
   return (
     <main className="w-full flex">
+      <div className="flex-1 flex items-center justify-center h-screen">
+        <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
+          <div>
+            <div className="mt-5 space-y-2">
+              <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
+                Se connecter
+              </h3>
+              <p>
+                Pas de compte?{' '}
+                <a
+                  href="signup"
+                  className="font-medium text-mainGreen hover:text-emerald-600"
+                >
+                  Créez votre compte
+                </a>
+              </p>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <InputItem
+              labelName="Email"
+              type="email"
+              value={email}
+              required={true}
+              onChangeValue={(e) => setEmail(e.target.value)}
+            />
+
+            <InputItem
+              labelName="Mot de passe"
+              type="password"
+              value={password}
+              required={true}
+              onChangeValue={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150"
+            >
+              Connexion à votre compte
+            </button>
+          </form>
+        </div>
+      </div>
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-emerald-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
           <div className="flex w-auto gap-6 items-center">
@@ -39,67 +73,8 @@ const RegisterPage: React.FC = () => {
         </div>
         <BackgroundAuth />
       </div>
-      <div className="flex-1 flex items-center justify-center h-screen">
-        <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
-          <div>
-            <div className="mt-5 space-y-2">
-              <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
-                S'enregistrer
-              </h3>
-              <p>
-                Déjà un compte?{' '}
-                <a
-                  href="signin"
-                  className="font-medium text-mainGreen hover:text-emerald-600"
-                >
-                  Se connecter
-                </a>
-              </p>
-            </div>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <InputItem
-              labelName="Nom"
-              type="text"
-              value={name}
-              required={true}
-              onChangeValue={(e) => setName(e.target.value)}
-            />
-
-            <InputItem
-              labelName="Email"
-              type="email"
-              value={email}
-              required={true}
-              onChangeValue={(e) => setEmail(e.target.value)}
-            />
-
-            <InputItem
-              labelName="Numéro de téléphone"
-              type="number"
-              value={phoneNumber}
-              required={true}
-              onChangeValue={handlePhoneNumberChange}
-            />
-
-            <InputItem
-              labelName="Mot de passe"
-              type="password"
-              value={password}
-              required={true}
-              onChangeValue={(e) => setPassword(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150"
-            >
-              Créez votre compte
-            </button>
-          </form>
-        </div>
-      </div>
     </main>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
