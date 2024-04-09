@@ -64,10 +64,10 @@ const LoginPage: React.FC = () => {
           </div>
           <div className=" mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold">
-              Commence à discuter avec tes amis !
+              Continue de discuter avec tes amis !
             </h3>
             <p className="text-gray-300">
-              Créer ton compte pour avoir accès à Whats'Up
+              Connecte toi à ton compte pour avoir accès à Whats'Up
             </p>
           </div>
         </div>
