@@ -46,7 +46,7 @@ const RegisterPage: React.FC = () => {
               <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
                 S'enregistrer
               </h3>
-              <p className="">
+              <p>
                 Déjà un compte?{' '}
                 <a
                   href="javascript:void(0)"
