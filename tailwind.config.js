@@ -6,7 +6,7 @@ export default {
       colors: {
         mainWhite: '#ffffff',
         secondaryWhite: '#f0f2f5',
-        mainGeen: '#008069',
+        mainGreen: '#008069',
         secondaryGreen: '#d9fdd3',
         mainBeige: '#f0ebe3',
         secondaryBeige: '#ffeecd',
