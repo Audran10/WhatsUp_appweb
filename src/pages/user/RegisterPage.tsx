@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import InputItem from '../../components/items/InputItem.tsx';
 import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
+import { RegisterHook } from '../../hook/authentifiation/Register.tsx';
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -16,8 +20,26 @@ const RegisterPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      await RegisterHook({
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+      });
+
+      navigate('/signin'); // Redirect to login page
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    setName('');
+    setEmail('');
+    setPhoneNumber('');
+    setPassword('');
   };
 
   return (
@@ -48,12 +70,12 @@ const RegisterPage: React.FC = () => {
               </h3>
               <p>
                 Déjà un compte?{' '}
-                <a
-                  href="signin"
+                <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
+                  to="../signin"
                 >
                   Se connecter
-                </a>
+                </Link>
               </p>
             </div>
           </div>

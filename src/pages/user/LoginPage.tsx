@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import InputItem from '../../components/items/InputItem.tsx';
 import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
 
+import { validateEmail, validateOnlyNumbers } from '../../utils/utils.tsx';
+
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      validateOnlyNumbers(emailOrPhoneNumber) &&
+      emailOrPhoneNumber.length === 10
+    ) {
+      console.log('Phone Number:', emailOrPhoneNumber);
+    } else {
+      if (validateEmail(emailOrPhoneNumber)) {
+        console.log('Email:', emailOrPhoneNumber);
+      } else {
+        console.log('Invalid email');
+      }
+    }
   };
 
   return (
@@ -22,22 +38,22 @@ const LoginPage: React.FC = () => {
               </h3>
               <p>
                 Pas de compte?{' '}
-                <a
-                  href="signup"
+                <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
+                  to="../signup"
                 >
                   Créez votre compte
-                </a>
+                </Link>
               </p>
             </div>
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
             <InputItem
-              labelName="Email"
-              type="email"
-              value={email}
+              labelName="Email ou n° de téléphone"
+              type="text"
+              value={emailOrPhoneNumber}
               required={true}
-              onChangeValue={(e) => setEmail(e.target.value)}
+              onChangeValue={(e) => setEmailOrPhoneNumber(e.target.value)}
             />
 
             <InputItem
