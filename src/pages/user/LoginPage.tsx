@@ -1,28 +1,49 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import InputItem from '../../components/items/InputItem.tsx';
 import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
 
 import { validateEmail, validateOnlyNumbers } from '../../utils/utils.tsx';
 
+import { useLogin } from '../../hook/authentifiation/Login.tsx';
+
 const LoginPage: React.FC = () => {
   const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+  const LoginHook = useLogin();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
       validateOnlyNumbers(emailOrPhoneNumber) &&
       emailOrPhoneNumber.length === 10
     ) {
-      console.log('Phone Number:', emailOrPhoneNumber);
-    } else {
-      if (validateEmail(emailOrPhoneNumber)) {
-        console.log('Email:', emailOrPhoneNumber);
-      } else {
-        console.log('Invalid email');
+      try {
+        await LoginHook({
+          phoneNumber: emailOrPhoneNumber,
+          password: password,
+        });
+
+        navigate('/'); // Redirect to Home page
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    if (validateEmail(emailOrPhoneNumber)) {
+      try {
+        await LoginHook({
+          email: emailOrPhoneNumber,
+          password: password,
+        });
+
+        navigate('/'); // Redirect to Home page
+      } catch (error) {
+        console.error('Error:', error);
       }
     }
   };
@@ -75,7 +96,7 @@ const LoginPage: React.FC = () => {
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-emerald-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
           <div className="flex w-auto gap-6 items-center">
-            <img src="src/assets/logo_outline.png" width={120} />
+            <img alt="Logo" src="src/assets/logo_outline.png" width={120} />
             <h1 className="text-white text-4xl font-bold">Whats'Up</h1>
           </div>
           <div className=" mt-16 space-y-3">
