@@ -6,8 +6,6 @@ import { RootState } from '../../store';
 const HomePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
 
-  console.log('user:', user);
-
   return (
     <Layout>
       <h1 className="text-4xl text-center">
