@@ -47,7 +47,7 @@ const RegisterPage: React.FC = () => {
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-emerald-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
           <div className="flex w-auto gap-6 items-center">
-            <img src="src/assets/logo_outline.png" width={120} />
+            <img alt="Logo" src="src/assets/logo_outline.png" width={120} />
             <h1 className="text-white text-4xl font-bold">Whats'Up</h1>
           </div>
           <div className=" mt-16 space-y-3">
