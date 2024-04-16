@@ -30,7 +30,7 @@ const App: React.FC = () => {
               element={<AuthRoute element={<ConversationPage />} />}
             />
             <Route
-              path={'/profile'}
+              path="/profile"
               element={<AuthRoute element={<ProfilePage />} />}
             />
           </Routes>
