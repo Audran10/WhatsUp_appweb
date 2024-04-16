@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hook/authentifiation/CheckAuth';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/authentifiation/CheckAuth";
 
 interface AuthRouteProps {
   element: React.ReactNode;
@@ -9,7 +9,7 @@ interface AuthRouteProps {
 const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
   const currentUser = useAuth();
 
-  return currentUser ? element : <Navigate to={'/signin'} />;
+  return currentUser ? element : <Navigate to={"/signin"} />;
 };
 
 export default AuthRoute;

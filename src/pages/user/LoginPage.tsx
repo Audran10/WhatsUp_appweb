@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import InputItem from '../../components/items/InputItem.tsx';
-import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
+import InputItem from "../../components/common/items/InputItem.tsx";
+import BackgroundAuth from "../../components/backgrounds/BackgroundAuth.tsx";
 
-import { validateEmail, validateOnlyNumbers } from '../../utils/utils.tsx';
+import { validateEmail, validateOnlyNumbers } from "../../utils/utils.tsx";
 
-import { useLogin } from '../../hook/authentifiation/Login.tsx';
+import { useLogin } from "../../hooks/authentifiation/Login.tsx";
 
 const LoginPage: React.FC = () => {
-  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const LoginHook = useLogin();
@@ -28,9 +28,9 @@ const LoginPage: React.FC = () => {
           password: password,
         });
 
-        navigate('/'); // Redirect to Home page
+        navigate("/"); // Redirect to Home page
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     }
 
@@ -41,9 +41,9 @@ const LoginPage: React.FC = () => {
           password: password,
         });
 
-        navigate('/'); // Redirect to Home page
+        navigate("/"); // Redirect to Home page
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     }
   };
@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
                 Se connecter
               </h3>
               <p>
-                Pas de compte?{' '}
+                Pas de compte?{" "}
                 <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
                   to="../signup"

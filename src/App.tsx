@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthRoute from './routes/AuthRoutes';
 
 import HomePage from './pages/user/HomePage';
+import ConversationPage from './pages/user/ConversationPage';
 import RegisterPage from './pages/user/RegisterPage';
 import LoginPage from './pages/user/LoginPage';
 
@@ -20,9 +21,10 @@ const App: React.FC = () => {
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Routes>
-            <Route path={'/'} element={<AuthRoute element={<HomePage />} />} />
             <Route path="/signup" element={<RegisterPage />} />
             <Route path="/signin" element={<LoginPage />} />
+            <Route path="/" element={<AuthRoute element={<HomePage />} />} />
+            <Route path="/:conversationId" element={<AuthRoute element={<ConversationPage />} />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

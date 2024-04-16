@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import InputItem from '../../components/items/InputItem.tsx';
-import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
-import { RegisterHook } from '../../hook/authentifiation/Register.tsx';
+import InputItem from "../../components/common/items/InputItem.tsx";
+import BackgroundAuth from "../../components/backgrounds/BackgroundAuth.tsx";
+import { RegisterHook } from "../../hooks/authentifiation/Register.tsx";
 
 const RegisterPage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -31,15 +31,15 @@ const RegisterPage: React.FC = () => {
         password: password,
       });
 
-      navigate('/signin'); // Redirect to login page
+      navigate("/signin"); // Redirect to login page
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
 
-    setName('');
-    setEmail('');
-    setPhoneNumber('');
-    setPassword('');
+    setName("");
+    setEmail("");
+    setPhoneNumber("");
+    setPassword("");
   };
 
   return (
@@ -69,7 +69,7 @@ const RegisterPage: React.FC = () => {
                 S'enregistrer
               </h3>
               <p>
-                Déjà un compte?{' '}
+                Déjà un compte?{" "}
                 <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
                   to="../signin"
