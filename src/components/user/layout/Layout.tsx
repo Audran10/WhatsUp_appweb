@@ -38,9 +38,9 @@ const Layout: React.FC<LayoutProps> = ({
                   key={conversation._id}
                   conversationId={conversation._id}
                   name={conversation.name}
-                  lastSender={conversation.messages[0]?.senderId}
-                  lastMessage={conversation.messages[0]?.content}
-                  date={conversation.messages[0]?.createdAt.toString()}
+                  lastSender={conversation.messages?.[0]?.senderId}
+                  lastMessage={conversation.messages?.[0]?.content} 
+                  date={conversation.messages?.[0]?.createdAt.toString()}
                 />
               ))}
             </div>
@@ -50,7 +50,7 @@ const Layout: React.FC<LayoutProps> = ({
         )}
       </div>
 
-      <div className="flex flex-col h-full w-[70%] bg-mainBeige container">
+      <div className="flex flex-col w-[70%] bg-mainBeige container">
         {children}
       </div>
     </div>

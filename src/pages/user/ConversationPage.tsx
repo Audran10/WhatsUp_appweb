@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import getConversationById from "../../hooks/conversations/getConversationById";
 import Conversation from "../../models/Conversation";
 import Layout from "../../components/user/layout/Layout";
-import InputMessage from "../../components/user/InputMessage";
+import HeaderMessage from "../../components/user/conversation/HeaderMessage";
+import Message from "../../components/user/conversation/Message";
+import InputMessage from "../../components/user/conversation/InputMessage";
 
 const ConversationPage: React.FC = () => {
   const { conversationId } = useParams();
@@ -25,10 +27,15 @@ const ConversationPage: React.FC = () => {
 
   return (
     <Layout>
-      <h1>Hello conversation</h1>
-      <h1 className="flex text-4xl text-center items-end">
-        {conversation?.name}
-      </h1>
+      <HeaderMessage title={conversation?.name} />
+      <div className="flex-grow w-full overflow-y-auto">
+        <Message
+          myMessage={false}
+          sender="Paul"
+          content="Salut, comment ça va ?"
+          date="08:58"
+        />
+      </div>
       <InputMessage />
     </Layout>
   );

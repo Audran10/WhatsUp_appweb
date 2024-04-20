@@ -1,6 +1,7 @@
-import React from 'react';
-import { FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { FaPlus } from "react-icons/fa";
+import { BiCommentAdd } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const LayoutTop: React.FC = () => {
   return (
@@ -12,9 +13,14 @@ const LayoutTop: React.FC = () => {
           alt="logo"
         />
       </Link>
-      <button className="flex">
-        <FaPlus className="text-mainGray" />
-      </button>
+      <div className="flex flex-grow justify-end gap-4">
+        <button className="flex">
+          <BiCommentAdd className="text-mainGray text-2xl" />
+        </button>
+        <button className="flex">
+          <FaPlus className="text-mainGray text-xl" />
+        </button>
+      </div>
     </div>
   );
 };
