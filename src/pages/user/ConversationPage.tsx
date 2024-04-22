@@ -35,6 +35,12 @@ const ConversationPage: React.FC = () => {
           content="Salut, comment ça va ?"
           date="08:58"
         />
+        <Message
+          myMessage={true}
+          sender="Paul"
+          content="Salut, ça va et toi ?"
+          date="08:58"
+        />
       </div>
       <InputMessage />
     </Layout>

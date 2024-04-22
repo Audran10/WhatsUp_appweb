@@ -19,7 +19,10 @@ const InputMessage: React.FC = () => {
   };
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target as Node)) {
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(e.target as Node)
+    ) {
       setIsEmojiVisible(false);
     }
   };
@@ -47,7 +50,6 @@ const InputMessage: React.FC = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      console.log(message);
       setMessage("");
       EmojiVisible && setIsEmojiVisible(false);
       setTimeout(() => {
