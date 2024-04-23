@@ -7,7 +7,6 @@ const createConversation = async (
     const response = await fetch(`http://localhost:3000/conversations/create`, {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
       body: formData,

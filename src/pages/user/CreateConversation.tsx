@@ -23,7 +23,6 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     File | undefined
   >(undefined);
   const [members, setMembers] = useState<string[]>([]);
-  let formData = new FormData();
 
   const handleAddMember = () => {
     setNbMembers(nbMembers + 1);
@@ -44,6 +43,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
   };
 
   const handleCreateConversation = () => {
+    let formData = new FormData();
 
     if (conversationName) {
       formData.append("name", conversationName);
@@ -57,9 +57,8 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
       formData.append("file", conversationPicture);
     }
 
-    console.log(formData);
-
     createConversation(formData).then((conversation) => {
+      console.log("conv", conversation);
       setShowCreateGroup(false);
       navigate(`/${conversation._id}`);
     });
