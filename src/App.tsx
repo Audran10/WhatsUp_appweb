@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthRoute from './routes/AuthRoutes';
+import AuthAdminRoute from './routes/AuthAdminRoutes';
 
 import HomePage from './pages/user/HomePage';
 import ConversationPage from './pages/user/ConversationPage';
 import RegisterPage from './pages/user/RegisterPage';
 import LoginPage from './pages/user/LoginPage';
 import ProfilePage from './pages/user/ProfilePage';
+
+import AdminPage from './pages/admin/AdminPage';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -32,6 +35,10 @@ const App: React.FC = () => {
             <Route
               path="/profile"
               element={<AuthRoute element={<ProfilePage />} />}
+            />
+            <Route
+              path="admin"
+              element={<AuthAdminRoute element={<AdminPage />} />}
             />
           </Routes>
         </BrowserRouter>
