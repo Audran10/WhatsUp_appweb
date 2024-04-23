@@ -24,10 +24,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     });
   }, []);
 
-  conversations.map((conversation) => {
-    console.log(conversation);
-  });
-
   return (
     <div className="flex h-full w-full">
       <div className="flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container">
