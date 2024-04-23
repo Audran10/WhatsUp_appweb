@@ -1,6 +1,5 @@
 export const fetchUser = async (userId: string) => {
   try {
-    console.log('Fetching user:', userId);
     const response = await fetch(`http://localhost:3000/users/${userId}`, {
       method: 'GET',
       headers: {

@@ -23,7 +23,7 @@ export const LayoutCategory: React.FC<{
         </div>
         <div className="w-full flex flex-col items-start h-max overflow-y-auto">
           <div className="flex flex-row justify-between w-full text-left border-b px-2 py-4">
-            <div className="w-2/5 text-xl font-semibold">{firstCategory}</div>
+            <div className="w-1/5 text-xl font-semibold">{firstCategory}</div>
             <div className="w-1/5 text-xl font-semibold">{secondCategory}</div>
             <div className="w-1/5 text-xl font-semibold">{thirdCategory}</div>
             <div className="w-1/5 text-xl font-semibold">{fourthCategory}</div>
@@ -45,7 +45,7 @@ export const LayoutCategory: React.FC<{
           <div className="flex flex-row justify-between w-full text-left border-b px-2 py-4">
             <div className="w-1/4 text-xl font-semibold">{firstCategory}</div>
             <div className="w-1/4 text-xl font-semibold">{secondCategory}</div>
-            <div className="w-2/4 text-xl font-semibold">{thirdCategory}</div>
+            <div className="w-1/4 text-xl font-semibold">{thirdCategory}</div>
             <div className="w-1/4 text-xl font-semibold text-center">
               Action
             </div>

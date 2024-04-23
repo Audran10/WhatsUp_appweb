@@ -36,7 +36,7 @@ export const UserItem: React.FC<{
 
   return (
     <div className="w-full flex flex-row p-4 border-b hover:bg-gray-50 items-center">
-      <div className="w-2/5 font-semibold text-lg text-gray-800 text-left ">
+      <div className="w-1/5 font-semibold text-lg text-gray-800 text-left ">
         {`n°${userId}`}
       </div>
       <div className="w-1/5 text-gray-500 text-left">
