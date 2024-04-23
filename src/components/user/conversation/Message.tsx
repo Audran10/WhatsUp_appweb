@@ -1,8 +1,10 @@
 import React from "react";
+import User from "../../../models/User";
+import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 
 interface MessageProps {
   myMessage: boolean;
-  sender: string;
+  sender: User;
   content: string;
   date: string;
 }
@@ -16,12 +18,16 @@ const Message: React.FC<MessageProps> = ({
   return (
     <>
       {myMessage ? (
-        <div className="flex justify-end w-full h-auto p-4">
+        <div className="flex justify-end w-[97%] h-auto p-4">
           <div className="flex flex-col bg-secondaryGreen rounded-xl p-2 max-w-[60%] relative">
-            <span className="max-w-[95%]">{content}</span>
-            <span className="text-secondaryGray text-xs absolute bottom-0 right-0 p-2">
-              {date}
-            </span>
+            <div className="flex">
+              <span className="w-[95%] text-base flex items-start mr-1">
+                {content}
+              </span>
+              <span className="text-secondaryGray text-xs flex items-end">
+                {date}
+              </span>
+            </div>
           </div>
         </div>
       ) : (
@@ -32,11 +38,20 @@ const Message: React.FC<MessageProps> = ({
             alt="logo"
           />
           <div className="flex flex-col bg-mainWhite rounded-xl p-2 max-w-[60%] relative">
-            <h1>~ {sender}</h1>
-            <span className="max-w-[95%]">{content}</span>
-            <span className="text-secondaryGray text-xs absolute bottom-0 right-0 p-2">
-              {date}
-            </span>
+            <h1 className="text-base text-red-300">
+              ~ {sender?.pseudo}
+              <span className="text-secondaryGray text-xs ml-3">
+                {formatPhoneNumber(sender?.phone)}
+              </span>
+            </h1>
+            <div className="flex">
+              <span className="w-[95%] text-base flex items-start">
+                {content}
+              </span>
+              <span className="text-secondaryGray text-xs flex items-end">
+                {date}
+              </span>
+            </div>
           </div>
         </div>
       )}
