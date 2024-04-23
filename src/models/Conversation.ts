@@ -1,17 +1,14 @@
 import User from "./User";
-
-interface Message {
-  _id: string;
-  sender_id: string;
-  content: string;
-  created_at: Date;
-}
+import Message from "./Message";
 
 interface Conversation {
   _id: string;
   name: string;
   users: User[];
+  picture: string;
+  picture_url: string;
   messages: Message[];
+  last_message: Message;
   created_at: Date;
   updated_at: Date;
 }
