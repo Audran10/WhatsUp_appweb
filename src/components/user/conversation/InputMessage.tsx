@@ -54,6 +54,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ onSend }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+
       onSend(message);
       setMessage("");
       EmojiVisible && setIsEmojiVisible(false);
