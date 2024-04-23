@@ -10,7 +10,7 @@ import InputMessage from "../../components/user/conversation/InputMessage";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { dateToStringInHours } from "../../utils/utils";
-import findSenderName from "../../utils/findSenderName";
+import findSenderMessage from "../../utils/findSenderMessage";
 
 const ConversationPage: React.FC = () => {
   const { conversationId } = useParams();
@@ -86,7 +86,7 @@ const ConversationPage: React.FC = () => {
           <Message
             key={index}
             myMessage={message.sender_id === user?._id}
-            sender={findSenderName(conversation, message.sender_id)}
+            sender={findSenderMessage(conversation, message.sender_id)}
             content={message.content}
             date={dateToStringInHours(message.created_at)}
           />

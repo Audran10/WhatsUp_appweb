@@ -1,7 +1,7 @@
 import Conversation from "../models/Conversation";
 import User from "../models/User";
 
-const findSenderName = (conversation: Conversation, senderId: string): User => {
+const findSenderMessage = (conversation: Conversation, senderId: string): User => {
   const sender = conversation.users.find(
     (user: User) => user._id === senderId
   );
@@ -13,4 +13,4 @@ const findSenderName = (conversation: Conversation, senderId: string): User => {
   return sender;
 };
 
-export default findSenderName;
+export default findSenderMessage;
