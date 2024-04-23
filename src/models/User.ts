@@ -1,4 +1,4 @@
-export interface User {
+interface User {
   _id: string;
   pseudo: string;
   email: string;
@@ -7,3 +7,5 @@ export interface User {
   profilePicture: string;
   biography: string;
 }
+
+export default User;

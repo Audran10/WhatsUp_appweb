@@ -1,8 +1,4 @@
-import Conversation from "../../models/Conversation";
-
-const getConversationById = async (
-  conversationId: string
-): Promise<Conversation> => {
+const getConversationById = async (conversationId: string) => {
   try {
     const response = await fetch(
       `http://localhost:3000/conversations/${conversationId}`,
@@ -21,8 +17,7 @@ const getConversationById = async (
 
     return response.json();
   } catch (error) {
-    console.error(error);
-    return {} as Conversation;
+    return error;
   }
 };
 

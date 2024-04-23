@@ -5,7 +5,11 @@ import { IoSendSharp } from "react-icons/io5";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 
-const InputMessage: React.FC = () => {
+interface InputMessageProps {
+  onSend: (content: string) => void;
+}
+
+const InputMessage: React.FC<InputMessageProps> = ({ onSend }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState<string>("");
   const [EmojiVisible, setIsEmojiVisible] = useState<boolean>(false);
@@ -50,6 +54,8 @@ const InputMessage: React.FC = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+
+      onSend(message);
       setMessage("");
       EmojiVisible && setIsEmojiVisible(false);
       setTimeout(() => {
@@ -59,6 +65,7 @@ const InputMessage: React.FC = () => {
   };
 
   const handleSend = () => {
+    onSend(message);
     setMessage("");
     EmojiVisible && setIsEmojiVisible(false);
     setTimeout(() => {
