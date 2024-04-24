@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
   return (
     <Layout>
       <h1 className="text-4xl text-center">
-        {user ? user.pseudo : 'User not connected'}
+        Accueil
       </h1>
     </Layout>
   );

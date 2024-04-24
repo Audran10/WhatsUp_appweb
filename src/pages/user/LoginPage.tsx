@@ -4,7 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import InputItem from '../../components/common/items/InputItem.tsx';
 import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
 
-import { validateEmail, validateOnlyNumbers } from '../../utils/utils.tsx';
+
+import { validateEmail, validateOnlyNumbers } from "../../utils/utils";
 
 import { useLogin } from '../../hooks/authentifiation/Login';
 
@@ -27,8 +28,7 @@ const LoginPage: React.FC = () => {
           phoneNumber: emailOrPhoneNumber,
           password: password,
         });
-
-        navigate('/'); // Redirect to Home page
+        navigate("/");
       } catch (error) {
         console.error('Error:', error);
       }
@@ -40,8 +40,7 @@ const LoginPage: React.FC = () => {
           email: emailOrPhoneNumber,
           password: password,
         });
-
-        navigate('/'); // Redirect to Home page
+        navigate("/");
       } catch (error) {
         console.error('Error:', error);
       }

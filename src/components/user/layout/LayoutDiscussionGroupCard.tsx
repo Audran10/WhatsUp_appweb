@@ -30,8 +30,11 @@ const LayoutDiscussionGroupCard: React.FC<LayoutDiscussionGroupCardProps> = ({
             <span className="text-sm text-secondaryGray p-2">{date}</span>
           </div>
           <div className="flex h-[50%] w-full mt-1">
-            <span className="text-sm text-secondaryGray">
+            {/* <span className="text-sm text-secondaryGray">
               {lastSender}: {lastMessage}
+            </span> */}
+            <span className="text-sm text-secondaryGray">
+              Moi: Salut ça va et toi ?
             </span>
           </div>
         </div>
