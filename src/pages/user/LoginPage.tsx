@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-import InputItem from "../../components/common/items/InputItem.tsx";
-import BackgroundAuth from "../../components/backgrounds/BackgroundAuth.tsx";
+import InputItem from '../../components/common/items/InputItem.tsx';
+import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
+
 
 import { validateEmail, validateOnlyNumbers } from "../../utils/utils";
 
-import { useLogin } from "../../hooks/authentifiation/Login.tsx";
+import { useLogin } from '../../hooks/authentifiation/Login';
 
 const LoginPage: React.FC = () => {
-  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
   const LoginHook = useLogin();
@@ -27,10 +28,9 @@ const LoginPage: React.FC = () => {
           phoneNumber: emailOrPhoneNumber,
           password: password,
         });
-
         navigate("/");
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
       }
     }
 
@@ -40,10 +40,9 @@ const LoginPage: React.FC = () => {
           email: emailOrPhoneNumber,
           password: password,
         });
-
         navigate("/");
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
       }
     }
   };
@@ -58,11 +57,10 @@ const LoginPage: React.FC = () => {
                 Se connecter
               </h3>
               <p>
-                Pas de compte?{" "}
+                Pas de compte?{' '}
                 <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
-                  to="../signup"
-                >
+                  to="../signup">
                   Créez votre compte
                 </Link>
               </p>
@@ -86,8 +84,7 @@ const LoginPage: React.FC = () => {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150"
-            >
+              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150">
               Connexion à votre compte
             </button>
           </form>
