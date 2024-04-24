@@ -1,6 +1,5 @@
 export const fetchTicket = async (ticketId: string) => {
   try {
-    console.log('Fetching ticket:', ticketId);
     const response = await fetch(`http://localhost:3000/ticket/${ticketId}`, {
       method: 'GET',
       headers: {

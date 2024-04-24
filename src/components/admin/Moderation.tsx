@@ -9,7 +9,6 @@ export const Moderation: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        console.log('Fetching updated list of users');
         const response = await fetch('http://localhost:3000/users/', {
           method: 'GET',
           headers: {

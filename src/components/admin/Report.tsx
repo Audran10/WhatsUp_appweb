@@ -9,7 +9,6 @@ export const Report: React.FC = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        console.log('Fetching updated list of users');
         const response = await fetch('http://localhost:3000/tickets/', {
           method: 'GET',
           headers: {
