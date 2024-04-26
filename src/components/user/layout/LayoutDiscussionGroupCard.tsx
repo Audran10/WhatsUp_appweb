@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import defaultAvatar from "../../../assets/defaultAvatar.png";
 import { formatText } from "../../../utils/formatText";
 
@@ -20,9 +20,10 @@ const LayoutDiscussionGroupCard: React.FC<LayoutDiscussionGroupCardProps> = ({
   lastMessage,
   date,
 }) => {
+  const params = useParams();
   return (
     <Link to={`/${conversationId}`}>
-      <div className="flex w-full h-20 p-4 border-b hover:bg-secondaryWhite hover:cursor-pointer">
+      <div className={`flex w-full h-20 p-4 border-b hover:bg-secondaryWhite hover:cursor-pointer ${params.conversationId === conversationId ? 'bg-secondaryWhite' : ''}`}>
         <img
           className="w-14 h-14 rounded-full object-center object-cover"
           src={groupPicture ?? defaultAvatar}

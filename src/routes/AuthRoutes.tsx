@@ -9,7 +9,7 @@ interface AuthRouteProps {
 const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
   const currentUser = useAuth();
 
-  return currentUser ? element : <Navigate to={"/signin"} />;
+  return currentUser ? element : <Navigate to={"/login"} />;
 };
 
 export default AuthRoute;

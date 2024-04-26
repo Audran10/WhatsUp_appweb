@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../reducers/userSlice';
-import { User } from '../../models/User';
+import User from '../../models/User';
 
 interface LoginHookArgs {
   email?: string;
@@ -44,7 +44,6 @@ export const useLogin = () => {
       localStorage.setItem('access_token', result.access_token);
       dispatch(setUser(result.user));
     } catch (error) {
-      console.error('Error during login:', error);
       throw error;
     }
   };
