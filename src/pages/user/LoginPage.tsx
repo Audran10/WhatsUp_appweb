@@ -1,49 +1,53 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import InputItem from '../../components/common/items/InputItem.tsx';
-import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
+import InputItem from "../../components/common/items/InputItem.tsx";
+import BackgroundAuth from "../../components/backgrounds/BackgroundAuth.tsx";
 
+import { isValidPhoneNumber } from "../../utils/utils";
 
-import { validateEmail, validateOnlyNumbers } from "../../utils/utils";
-
-import { useLogin } from '../../hooks/authentifiation/Login';
+import { useLogin } from "../../hooks/authentifiation/Login";
 
 const LoginPage: React.FC = () => {
-  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    phone: "",
+    login: "",
+  });
 
   const navigate = useNavigate();
   const LoginHook = useLogin();
 
+  const isValidInputs = () => {
+    let isValid = true;
+    const newErrors = {
+      phone: "",
+      login: "",
+    };
+
+    if (!isValidPhoneNumber(phoneNumber)) {
+      isValid = false;
+      newErrors.phone = "Le numéro de téléphone est incorrect";
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      validateOnlyNumbers(emailOrPhoneNumber) &&
-      emailOrPhoneNumber.length === 10
-    ) {
-      try {
-        await LoginHook({
-          phoneNumber: emailOrPhoneNumber,
-          password: password,
-        });
-        navigate("/");
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
+    if (!isValidInputs()) return;
 
-    if (validateEmail(emailOrPhoneNumber)) {
-      try {
-        await LoginHook({
-          email: emailOrPhoneNumber,
-          password: password,
-        });
-        navigate("/");
-      } catch (error) {
-        console.error('Error:', error);
-      }
+    try {
+      await LoginHook({
+        phoneNumber: phoneNumber,
+        password: password,
+      });
+      navigate("/");
+    } catch (error) {
+      setErrors((prevErrors) => ({...prevErrors, login: "Mauvais numéro de téléphone ou mot de passe"}));
     }
   };
 
@@ -57,10 +61,11 @@ const LoginPage: React.FC = () => {
                 Se connecter
               </h3>
               <p>
-                Pas de compte?{' '}
+                Pas de compte?{" "}
                 <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
-                  to="../signup">
+                  to="../register"
+                >
                   Créez votre compte
                 </Link>
               </p>
@@ -68,11 +73,15 @@ const LoginPage: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
             <InputItem
-              labelName="Email ou n° de téléphone"
+              labelName="n° de téléphone"
               type="text"
-              value={emailOrPhoneNumber}
+              value={phoneNumber}
               required={true}
-              onChangeValue={(e) => setEmailOrPhoneNumber(e.target.value)}
+              errorMessages={errors.phone}
+              onChangeValue={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                setPhoneNumber(value);
+              }}
             />
 
             <InputItem
@@ -82,11 +91,14 @@ const LoginPage: React.FC = () => {
               required={true}
               onChangeValue={(e) => setPassword(e.target.value)}
             />
+
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150">
+              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150"
+            >
               Connexion à votre compte
             </button>
+            {errors.login && <p className="text-red-500 text-sm font-medium">{errors.login}</p>}
           </form>
         </div>
       </div>

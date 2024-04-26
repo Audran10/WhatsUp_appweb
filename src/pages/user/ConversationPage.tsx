@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import io from "socket.io-client";
 import getConversationById from "../../hooks/conversations/getConversationById";
 import Conversation from "../../models/Conversation";
-import Layout from "../../components/user/layout/Layout";
+import { ClipLoader } from "react-spinners";
 import HeaderMessage from "../../components/user/conversation/HeaderMessage";
 import Message from "../../components/user/conversation/Message";
 import InputMessage from "../../components/user/conversation/InputMessage";
@@ -33,8 +33,8 @@ const ConversationPage: React.FC = () => {
     if (conversationId) {
       getConversationById(conversationId).then((data) => {
         setConversation(data);
-        setLoading(false);
         joinRoom();
+        setLoading(false);
       });
     }
   }, [conversationId]);
@@ -77,19 +77,23 @@ const ConversationPage: React.FC = () => {
   }, [conversation?.messages]);
 
   if (isLoading) {
-    return <Layout>Loading...</Layout>;
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <ClipLoader color="#99999e" size={50} />
+      </div>
+    );
   }
 
   return (
-    <Layout>
+    <>
       <HeaderMessage
         title={conversation?.name}
-        picture={conversation.picture_url}
+        picture={conversation?.picture_url}
       />
       <div className="flex-grow w-full overflow-y-auto" ref={messagesEndRef}>
-        {conversation?.messages.map((message, index) => (
+        {conversation?.messages.map((message) => (
           <Message
-            key={index}
+            key={message._id}
             myMessage={message.sender_id === user?._id}
             sender={findSenderMessage(conversation, message.sender_id)}
             content={message.content}
@@ -98,7 +102,7 @@ const ConversationPage: React.FC = () => {
         ))}
       </div>
       <InputMessage onSend={sendMessage} />
-    </Layout>
+    </>
   );
 };
 

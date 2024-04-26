@@ -1,27 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import InputItem from '../../components/common/items/InputItem.tsx';
-import BackgroundAuth from '../../components/backgrounds/BackgroundAuth.tsx';
-import { RegisterHook } from '../../hooks/authentifiation/Register';
+import InputItem from "../../components/common/items/InputItem.tsx";
+import BackgroundAuth from "../../components/backgrounds/BackgroundAuth.tsx";
+import { RegisterHook } from "../../hooks/authentifiation/Register";
+import { isValidPhoneNumber, isValidEmail } from "../../utils/utils";
 
 const RegisterPage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    phone: "",
+    register: "",
+  });
 
   const navigate = useNavigate();
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    if (newValue.length <= 10) {
-      setPhoneNumber(newValue);
+  const isValidInputs = () => {
+    let isValid = true;
+    const newErrors = {
+      email: "",
+      phone: "",
+      register: "",
+    };
+
+    if (!isValidEmail(email)) {
+      isValid = false;
+      newErrors.email = "Le format de l'email est incorrect";
     }
+
+    if (!isValidPhoneNumber(phoneNumber)) {
+      isValid = false;
+      newErrors.phone = "Le numéro de téléphone est incorrect";
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isValidInputs()) return;
 
     try {
       await RegisterHook({
@@ -31,15 +54,13 @@ const RegisterPage: React.FC = () => {
         password: password,
       });
 
-      navigate('/signin'); // Redirect to login page
+      navigate("/login");
     } catch (error) {
-      console.error('Error:', error);
+      setErrors({
+        ...errors,
+        register: "Erreur lors de la création du compte",
+      });
     }
-
-    setName('');
-    setEmail('');
-    setPhoneNumber('');
-    setPassword('');
   };
 
   return (
@@ -69,10 +90,11 @@ const RegisterPage: React.FC = () => {
                 S'enregistrer
               </h3>
               <p>
-                Déjà un compte?{' '}
+                Déjà un compte?{" "}
                 <Link
                   className="font-medium text-mainGreen hover:text-emerald-600"
-                  to="../signin">
+                  to="../login"
+                >
                   Se connecter
                 </Link>
               </p>
@@ -84,6 +106,7 @@ const RegisterPage: React.FC = () => {
               type="text"
               value={name}
               required={true}
+              maxLength={64}
               onChangeValue={(e) => setName(e.target.value)}
             />
 
@@ -92,15 +115,20 @@ const RegisterPage: React.FC = () => {
               type="email"
               value={email}
               required={true}
+              errorMessages={errors.email}
               onChangeValue={(e) => setEmail(e.target.value)}
             />
 
             <InputItem
               labelName="Numéro de téléphone"
-              type="number"
+              type="text"
               value={phoneNumber}
               required={true}
-              onChangeValue={handlePhoneNumberChange}
+              errorMessages={errors.phone}
+              onChangeValue={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                setPhoneNumber(value);
+              }}
             />
 
             <InputItem
@@ -112,9 +140,15 @@ const RegisterPage: React.FC = () => {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150">
+              className="w-full px-4 py-2 text-white font-medium bg-mainGreen hover:bg-emerald-600 active:bg-mainGreen rounded-lg duration-150"
+            >
               Créez votre compte
             </button>
+            {errors.register && (
+              <p className="text-red-500 text-sm font-medium">
+                {errors.register}
+              </p>
+            )}
           </form>
         </div>
       </div>

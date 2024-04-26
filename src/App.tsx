@@ -1,21 +1,23 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AuthRoute from './routes/AuthRoutes';
-import AuthAdminRoute from './routes/AuthAdminRoutes';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthRoute from "./routes/AuthRoutes";
+import AuthAdminRoute from "./routes/AuthAdminRoutes";
+import AnonymousRoute from "./routes/AnonymousRoute";
 
-import HomePage from './pages/user/HomePage';
-import ConversationPage from './pages/user/ConversationPage';
-import RegisterPage from './pages/user/RegisterPage';
-import LoginPage from './pages/user/LoginPage';
-import ProfilePage from './pages/user/ProfilePage';
+import HomePage from "./pages/user/HomePage";
+import ConversationPage from "./pages/user/ConversationPage";
+import RegisterPage from "./pages/user/RegisterPage";
+import LoginPage from "./pages/user/LoginPage";
+import ProfilePage from "./pages/user/ProfilePage";
 
-import AdminPage from './pages/admin/AdminPage';
+import AdminPage from "./pages/admin/AdminPage";
 
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider } from "react-redux";
+import store from "./store";
 
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore } from 'redux-persist';
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import Layout from "./components/user/layout/Layout";
 
 const App: React.FC = () => {
   const persistor = persistStore(store);
@@ -25,17 +27,21 @@ const App: React.FC = () => {
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Routes>
-            <Route path="/signup" element={<RegisterPage />} />
-            <Route path="/signin" element={<LoginPage />} />
-            <Route path="/" element={<AuthRoute element={<HomePage />} />} />
-            <Route
-              path="/:conversationId"
-              element={<AuthRoute element={<ConversationPage />} />}
-            />
-            <Route
-              path="/profile"
-              element={<AuthRoute element={<ProfilePage />} />}
-            />
+            <Route path="/register" element={<AnonymousRoute element={<RegisterPage />} />} />
+            <Route path="/login" element={<AnonymousRoute element={<LoginPage />} />} />
+
+            <Route path="/" element={<AuthRoute element={<Layout />} />}>
+              <Route index element={<HomePage />} />
+              <Route
+                path="/:conversationId"
+                element={<ConversationPage />}
+              />
+              <Route
+                path="/profile"
+                element={<ProfilePage />}
+              />
+            </Route>
+
             <Route
               path="admin"
               element={<AuthAdminRoute element={<AdminPage />} />}

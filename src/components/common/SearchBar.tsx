@@ -4,11 +4,13 @@ import { FaSearch } from "react-icons/fa";
 interface SearchBarProps {
   placeholder: string;
   border?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   placeholder,
   border = true,
+  onChange,
 }) => {
   return (
     <div
@@ -28,6 +30,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             id="search"
             className=" w-full p-4 ps-10 text-sm text-mainGray rounded-lg bg-secondaryWhite focus:outline-none"
             placeholder={placeholder}
+            onChange={onChange}
           />
         </div>
       </div>

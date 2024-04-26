@@ -6,6 +6,7 @@ interface InputItemProps {
   value: string;
   required?: boolean;
   maxLength?: number;
+  errorMessages?: string;
   onChangeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -15,6 +16,7 @@ const InputItem: React.FC<InputItemProps> = ({
   value,
   required,
   maxLength,
+  errorMessages,
   onChangeValue,
 }) => {
   return (
@@ -28,6 +30,7 @@ const InputItem: React.FC<InputItemProps> = ({
         onChange={onChangeValue}
         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-mainGreen shadow-sm rounded-lg"
       />
+      {errorMessages && <p className="text-red-500 text-sm font-medium">{errorMessages}</p>}
     </div>
   );
 };

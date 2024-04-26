@@ -1,6 +1,5 @@
 import React from "react";
 import User from "../../../models/User";
-import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 
 interface MessageProps {
   myMessage: boolean;
@@ -21,7 +20,7 @@ const Message: React.FC<MessageProps> = ({
         <div className="flex justify-end w-[97%] h-auto p-4">
           <div className="flex flex-col bg-secondaryGreen rounded-xl p-2 max-w-[60%] relative">
             <div className="flex">
-              <span className="w-[95%] text-base flex items-start mr-1">
+              <span className="w-[95%] text-base flex items-start mr-2">
                 {content}
               </span>
               <span className="text-secondaryGray text-xs flex items-end">
@@ -40,12 +39,9 @@ const Message: React.FC<MessageProps> = ({
           <div className="flex flex-col bg-mainWhite rounded-xl p-2 max-w-[60%] relative">
             <h1 className="text-base text-red-300">
               ~ {sender?.pseudo}
-              <span className="text-secondaryGray text-xs ml-3">
-                {formatPhoneNumber(sender?.phone)}
-              </span>
             </h1>
             <div className="flex">
-              <span className="w-[95%] text-base flex items-start">
+              <span className="w-[95%] text-base flex items-start mr-2">
                 {content}
               </span>
               <span className="text-secondaryGray text-xs flex items-end">
