@@ -7,10 +7,3 @@ export function validateEmail(email: string) {
 export function validateOnlyNumbers(phone: string) {
   return phone.match(/^\d+$/);
 }
-
-export function dateToStringInHours(date: Date) {
-  return new Date(date).toLocaleString("fr-FR", {
-    hour: "numeric",
-    minute: "numeric",
-  });
-}

@@ -6,6 +6,8 @@ import CreateConversation from "../../../pages/user/CreateConversation";
 import ProfilePage from "../../../pages/user/ProfilePage";
 import getMyConversations from "../../../hooks/conversations/getMyConversations";
 import Conversation from "../../../models/Conversation";
+import {formatDate} from "../../../utils/formatDate";
+import findSenderMessage from "../../../utils/findSenderMessage";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -44,10 +46,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <LayoutDiscussionGroupCard
                   key={conversation._id}
                   conversationId={conversation._id}
+                  groupPicture={conversation.picture_url}
                   name={conversation.name}
-                  lastSender={conversation.messages?.[0]?.senderId}
-                  lastMessage={conversation.messages?.[0]?.content}
-                  date={conversation.messages?.[0]?.createdAt.toString()}
+                  lastSender={conversation.last_message ? findSenderMessage(conversation, conversation.last_message?.sender_id).pseudo : ""}
+                  lastMessage={conversation.last_message?.content}
+                  date={formatDate(conversation.last_message?.created_at)}
                 />
               ))}
             </div>

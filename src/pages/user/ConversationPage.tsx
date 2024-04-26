@@ -9,13 +9,15 @@ import Message from "../../components/user/conversation/Message";
 import InputMessage from "../../components/user/conversation/InputMessage";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { dateToStringInHours } from "../../utils/utils";
+import { formatDateInHour } from "../../utils/formatDate";
 import findSenderMessage from "../../utils/findSenderMessage";
 
 const ConversationPage: React.FC = () => {
   const { conversationId } = useParams();
   const user = useSelector((state: RootState) => state.user.value);
-  const [conversation, setConversation] = useState<Conversation>({} as Conversation);
+  const [conversation, setConversation] = useState<Conversation>(
+    {} as Conversation
+  );
   const [isLoading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -80,7 +82,10 @@ const ConversationPage: React.FC = () => {
 
   return (
     <Layout>
-      <HeaderMessage title={conversation?.name} />
+      <HeaderMessage
+        title={conversation?.name}
+        picture={conversation.picture_url}
+      />
       <div className="flex-grow w-full overflow-y-auto" ref={messagesEndRef}>
         {conversation?.messages.map((message, index) => (
           <Message
@@ -88,7 +93,7 @@ const ConversationPage: React.FC = () => {
             myMessage={message.sender_id === user?._id}
             sender={findSenderMessage(conversation, message.sender_id)}
             content={message.content}
-            date={dateToStringInHours(message.created_at)}
+            date={formatDateInHour(message.created_at)}
           />
         ))}
       </div>
