@@ -97,7 +97,7 @@ const Layout: React.FC = () => {
         )}
       </div>
 
-      <div className="flex flex-col w-[70%] bg-[url(/src/assets/conversation_background.png)] container">
+      <div className="flex flex-col w-[70%] bg-secondaryWhite container">
         <Outlet />
       </div>
     </div>

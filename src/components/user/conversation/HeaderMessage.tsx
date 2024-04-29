@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import defaultAvatar from "../../../assets/defaultAvatar.png";
+import leaveConversation from "../../../hooks/conversations/leaveConversation";
+import { useParams } from "react-router-dom";
 
 interface HeaderMessageProps {
   title: string | undefined;
@@ -8,8 +10,42 @@ interface HeaderMessageProps {
 }
 
 const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
+  const { conversationId } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const optionRef = React.useRef<HTMLDivElement>(null);
+
+  if (!conversationId) {
+    return null;
+  }
+
+  const openMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const leaveGroup = () => {
+    leaveConversation(conversationId).then(() => {
+      window.location.href = "/";
+    });
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      optionRef.current &&
+      !optionRef.current.contains(e.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="bg-secondaryWhite w-full h-[8%] flex items-center justify-between p-4">
+    <div className="bg-secondaryWhite w-full h-[8%] flex items-center justify-between p-4 relative">
       <div className="flex">
         <img
           className="w-14 h-14 rounded-full object-center object-cover "
@@ -21,9 +57,16 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
           <span className="text-secondaryGray ml-4">En ligne</span>
         </div>
       </div>
-      <button>
+      <button onClick={openMenu} className={`flex justify-center items-center h-10 w-10 ${isOpen ? "bg-gray-300 rounded-full" : null}`}>
         <BsThreeDotsVertical className="text-mainGray text-2xl" />
       </button>
+      {isOpen && (
+        <div className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1" ref={optionRef}>
+          <button onClick={leaveGroup} className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
+            Quitter le groupe
+          </button>
+        </div>
+      )}
     </div>
   );
 };

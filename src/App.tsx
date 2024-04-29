@@ -8,7 +8,6 @@ import HomePage from "./pages/user/HomePage";
 import ConversationPage from "./pages/user/ConversationPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import LoginPage from "./pages/user/LoginPage";
-import ProfilePage from "./pages/user/ProfilePage";
 
 import AdminPage from "./pages/admin/AdminPage";
 
@@ -35,10 +34,6 @@ const App: React.FC = () => {
               <Route
                 path="/:conversationId"
                 element={<ConversationPage />}
-              />
-              <Route
-                path="/profile"
-                element={<ProfilePage />}
               />
             </Route>
 
