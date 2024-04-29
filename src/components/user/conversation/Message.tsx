@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import User from "../../../models/User";
-import { IoIosArrowDown } from "react-icons/io";
-import defaultAvatar from "../../../assets/defaultAvatar.png";
-import createTicket from "../../../hooks/tickets/createTicket";
-import Message from "../../../models/Message";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { formatDateInHour } from "../../../utils/formatDate";
+import React, { useEffect, useState } from 'react';
+import User from '../../../models/User';
+import { IoIosArrowDown } from 'react-icons/io';
+import defaultAvatar from '../../../assets/defaultAvatar.png';
+import createTicket from '../../../hooks/tickets/createTicket';
+import Message from '../../../models/Message';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { formatDateInHour } from '../../../utils/formatDate';
 
 interface MessageComposantProps {
   myMessage: boolean;
@@ -42,18 +42,15 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
   };
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (
-      optionRef.current &&
-      !optionRef.current.contains(e.target as Node)
-    ) {
+    if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
       setOptionIsOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -82,16 +79,15 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
           <div
             className="flex flex-col bg-mainWhite rounded-xl p-2 max-w-[60%]"
             onMouseEnter={toggleMessageOption}
-            onMouseLeave={toggleMessageOption}
-          >
+            onMouseLeave={toggleMessageOption}>
             <div className="flex flex-row items-center justify-between">
               <h1 className="text-base text-red-300">{sender?.pseudo}</h1>
               <button className="flex" onClick={openOption}>
                 <IoIosArrowDown
                   className={`h-5 w-5 ${
                     showMessageOption
-                      ? "text-secondaryGray"
-                      : "text-transparent"
+                      ? 'text-secondaryGray'
+                      : 'text-transparent'
                   }`}
                 />
               </button>
@@ -106,13 +102,12 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
             </div>
           </div>
           {optionIsOpen && (
-              <button
-                className="flex bg-mainWhite py-2 px-4 rounded h-10 ml-1 hover:bg-secondaryWhite text-mainGray"
-                onClick={handleReport}
-                ref={optionRef}
-              >
-                Signaler
-              </button>
+            <button
+              className="flex bg-mainWhite py-2 px-4 rounded h-10 ml-1 hover:bg-secondaryWhite text-mainGray"
+              onClick={handleReport}
+              ref={optionRef}>
+              Signaler
+            </button>
           )}
         </div>
       )}

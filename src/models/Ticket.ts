@@ -2,6 +2,6 @@ export interface Ticket {
   _id: string;
   reporter: string;
   content: string;
-  senderUsername: string;
-  senderID: string;
+  sender_username: string;
+  sender_id: string;
 }

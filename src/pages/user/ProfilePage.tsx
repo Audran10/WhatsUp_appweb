@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
-import { setUser } from "../../reducers/userSlice";
-import InputProfileItem from "../../components/items/InputProfileItem";
-import UserPicItem from "../../components/items/UserPicItem";
-import { FaArrowLeft } from "react-icons/fa6";
-import { IoExitOutline } from "react-icons/io5";
-import updateMyUser from "../../hooks/users/updateMyUser";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { setUser } from '../../reducers/userSlice';
+import InputProfileItem from '../../components/items/InputProfileItem';
+import UserPicItem from '../../components/items/UserPicItem';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { IoExitOutline } from 'react-icons/io5';
+import updateMyUser from '../../hooks/users/updateMyUser';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfilePageProps {
   setShowProfile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,9 +18,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.value);
   const [userPicture, setUserPicture] = useState<File | undefined>(undefined);
-  const [name, setName] = useState<string>(user?.pseudo || "");
+  const [name, setName] = useState<string>(user?.pseudo || '');
   const [biography, setBiography] = useState<string>(
-    user?.biography || "Salut ! J’utilise WhatsUp."
+    user?.biography || 'Salut ! J’utilise WhatsUp.'
   );
 
   if (!user) {
@@ -28,17 +28,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
   }
 
   const handleUpdateProfile = () => {
-    let formData = new FormData();
+    const formData = new FormData();
 
     if (name) {
-      formData.append("pseudo", name);
+      formData.append('pseudo', name);
     }
     if (biography) {
-      formData.append("biography", biography);
+      formData.append('biography', biography);
     }
 
     if (userPicture) {
-      formData.append("file", userPicture);
+      formData.append('file', userPicture);
     }
 
     updateMyUser(user?._id, formData).then((updatedUser) => {
@@ -48,11 +48,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("access_token");
+    localStorage.removeItem('access_token');
     dispatch(setUser(null));
-    navigate("/login");
+    navigate('/login');
   };
-
 
   return (
     <div className="h-full justify-center items-center bg-secondaryWhite">
@@ -64,10 +63,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
           <h1 className="text-2xl text-mainWhite">Profile</h1>
         </div>
 
-        <button
-          onClick={() => handleLogout()}
-          className="flex justify-end"
-        >
+        <button onClick={() => handleLogout()} className="flex justify-end">
           <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
         </button>
       </div>
@@ -79,7 +75,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
       />
 
       <InputProfileItem
-        labelName={"Votre nom"}
+        labelName={'Votre nom'}
         type="text"
         value={name}
         required={false}
@@ -92,7 +88,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
       </div>
 
       <InputProfileItem
-        labelName={"Info"}
+        labelName={'Info'}
         type="text"
         value={biography}
         required={false}
@@ -102,8 +98,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
       <div className="flex justify-center w-full">
         <button
           className="bg-mainGreen text-mainWhite p-2 rounded-lg mt-2 w-32"
-          onClick={handleUpdateProfile}
-        >
+          onClick={handleUpdateProfile}>
           Enregistrer
         </button>
       </div>

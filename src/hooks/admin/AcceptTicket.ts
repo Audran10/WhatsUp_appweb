@@ -13,7 +13,7 @@ export async function AcceptTicket(ticketId: string) {
 
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(`Failed to unban user: ${errorMessage}`);
+      throw new Error(`Failed to Accept Ticket: ${errorMessage}`);
     }
   } catch (error) {
     console.error(error);

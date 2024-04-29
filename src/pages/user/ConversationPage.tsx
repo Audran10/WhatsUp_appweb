@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import io from "socket.io-client";
-import getConversationById from "../../hooks/conversations/getConversationById";
-import Conversation from "../../models/Conversation";
-import { ClipLoader } from "react-spinners";
-import HeaderMessage from "../../components/user/conversation/HeaderMessage";
-import DateIndicator from "../../components/user/conversation/DateIndicator";
-import MessageComposant from "../../components/user/conversation/Message";
-import InputMessage from "../../components/user/conversation/InputMessage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import findSenderMessage from "../../utils/findSenderMessage";
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import io from 'socket.io-client';
+import getConversationById from '../../hooks/conversations/getConversationById';
+import Conversation from '../../models/Conversation';
+import { ClipLoader } from 'react-spinners';
+import HeaderMessage from '../../components/user/conversation/HeaderMessage';
+import DateIndicator from '../../components/user/conversation/DateIndicator';
+import MessageComposant from '../../components/user/conversation/Message';
+import InputMessage from '../../components/user/conversation/InputMessage';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import findSenderMessage from '../../utils/findSenderMessage';
 
 const ConversationPage: React.FC = () => {
   const { conversationId } = useParams();
@@ -21,11 +21,11 @@ const ConversationPage: React.FC = () => {
   const [isLoading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const socket = io("http://localhost:3000");
+  const socket = io('http://localhost:3000');
 
   const joinRoom = () => {
     if (socket && conversationId) {
-      socket.emit("joinConversation", conversationId);
+      socket.emit('joinConversation', conversationId);
     }
   };
 
@@ -42,7 +42,7 @@ const ConversationPage: React.FC = () => {
   const sendMessage = (content: string) => {
     if (socket && conversationId) {
       socket.emit(
-        "send_message",
+        'send_message',
         JSON.stringify({
           content,
           conversation_id: conversationId,
@@ -63,7 +63,7 @@ const ConversationPage: React.FC = () => {
         return { ...prevConversation, messages: updatedMessages };
       });
     }
-    socket.on("new_message", onConversationChange);
+    socket.on('new_message', onConversationChange);
   }, [conversation]);
 
   const scrollToBottom = () => {
@@ -92,8 +92,7 @@ const ConversationPage: React.FC = () => {
       />
       <div
         className="flex-grow w-full overflow-y-auto bg-[url(/src/assets/conversation_background.png)]"
-        ref={messagesEndRef}
-      >
+        ref={messagesEndRef}>
         {conversation?.messages.map((message, index) => {
           const previousMessage =
             index > 0 ? conversation.messages[index - 1] : null;

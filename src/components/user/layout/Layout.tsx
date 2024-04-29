@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import LayoutTop from "./LayoutTop";
-import SearchBar from "../../common/SearchBar";
-import LayoutDiscussionGroupCard from "./LayoutDiscussionGroupCard";
-import CreateConversation from "../../../pages/user/CreateConversation";
-import ProfilePage from "../../../pages/user/ProfilePage";
-import getMyConversations from "../../../hooks/conversations/getMyConversations";
-import Conversation from "../../../models/Conversation";
-import { formatListConversationDate } from "../../../utils/formatDate";
-import findSenderMessage from "../../../utils/findSenderMessage";
-import { Outlet } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import React, { useEffect, useState } from 'react';
+import LayoutTop from './LayoutTop';
+import SearchBar from '../../common/SearchBar';
+import LayoutDiscussionGroupCard from './LayoutDiscussionGroupCard';
+import CreateConversation from '../../../pages/user/CreateConversation';
+import ProfilePage from '../../../pages/user/ProfilePage';
+import getMyConversations from '../../../hooks/conversations/getMyConversations';
+import Conversation from '../../../models/Conversation';
+import { formatListConversationDate } from '../../../utils/formatDate';
+import findSenderMessage from '../../../utils/findSenderMessage';
+import { Outlet } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Layout: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
@@ -21,7 +23,7 @@ const Layout: React.FC = () => {
   >([]);
   const [showCreateGroup, setShowCreateGroup] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   if (!user) {
     return <div>Utilisateur non trouvé</div>;
@@ -33,6 +35,9 @@ const Layout: React.FC = () => {
       setSelectedConversations(data);
       setLoading(false);
     });
+    AOS.init({
+      duration: 400,
+    });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +48,7 @@ const Layout: React.FC = () => {
     setSelectedConversations(filteredConversations);
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-mainBeige">
         <ClipLoader color="#99999e" size={50} />
@@ -58,7 +63,9 @@ const Layout: React.FC = () => {
           <CreateConversation setShowCreateGroup={setShowCreateGroup} />
         )}
         {showProfile && !showCreateGroup && (
-          <ProfilePage setShowProfile={setShowProfile} />
+          <div className="h-full" data-aos={'fade-right'}>
+            <ProfilePage setShowProfile={setShowProfile} />
+          </div>
         )}
 
         {!showCreateGroup && !showProfile && (
@@ -84,7 +91,7 @@ const Layout: React.FC = () => {
                           conversation,
                           conversation.last_message?.sender_id
                         ).pseudo
-                      : ""
+                      : ''
                   }
                   lastMessage={conversation.last_message?.content}
                   date={formatListConversationDate(

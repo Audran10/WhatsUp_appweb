@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Report } from '../../components/admin/Report';
 import { Moderation } from '../../components/admin/Moderation';
 import { Stats } from '../../components/admin/Stats';
+import defaultAvatar from '../../assets/defaultAvatar.png';
 
 const AdminPage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
@@ -53,8 +54,7 @@ const AdminPage: React.FC = () => {
                 <li key={idx}>
                   <button
                     onClick={() => handlePageChange(item.name)}
-                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150"
-                  >
+                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
                     <div className="text-gray-500">{item.icon}</div>
                     {item.name}
                   </button>
@@ -66,7 +66,7 @@ const AdminPage: React.FC = () => {
                 <div className="flex items-center gap-x-4">
                   <img
                     alt="profilePicture"
-                    src={user?.profilePicture}
+                    src={user?.picture_url ?? defaultAvatar}
                     className="w-12 h-12 rounded-full"
                   />
                   <div>
@@ -74,9 +74,8 @@ const AdminPage: React.FC = () => {
                       {user?.pseudo}
                     </span>
                     <Link
-                      to="../profile"
-                      className="block mt-px text-gray-600 hover:text-indigo-600 text-xs"
-                    >
+                      to="/profile"
+                      className="block mt-px text-gray-600 hover:text-indigo-600 text-xs">
                       Voir mon profil
                     </Link>
                   </div>

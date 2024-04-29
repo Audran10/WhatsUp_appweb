@@ -26,7 +26,9 @@ export const LayoutCategory: React.FC<{
             <div className="w-1/5 text-xl font-semibold">{firstCategory}</div>
             <div className="w-1/5 text-xl font-semibold">{secondCategory}</div>
             <div className="w-1/5 text-xl font-semibold">{thirdCategory}</div>
-            <div className="w-1/5 text-xl font-semibold">{fourthCategory}</div>
+            <div className="w-1/5 text-xl text-center font-semibold">
+              {fourthCategory}
+            </div>
             <div className="w-1/5 text-xl font-semibold text-center">
               Action
             </div>
