@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Report } from '../../components/admin/Report';
 import { Moderation } from '../../components/admin/Moderation';
 import { Stats } from '../../components/admin/Stats';
+import defaultAvatar from '../../assets/defaultAvatar.png';
 
 const AdminPage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
@@ -65,7 +66,7 @@ const AdminPage: React.FC = () => {
                 <div className="flex items-center gap-x-4">
                   <img
                     alt="profilePicture"
-                    src={user?.picture}
+                    src={user?.picture_url ?? defaultAvatar}
                     className="w-12 h-12 rounded-full"
                   />
                   <div>
@@ -73,7 +74,7 @@ const AdminPage: React.FC = () => {
                       {user?.pseudo}
                     </span>
                     <Link
-                      to="../profile"
+                      to="/profile"
                       className="block mt-px text-gray-600 hover:text-indigo-600 text-xs">
                       Voir mon profil
                     </Link>
