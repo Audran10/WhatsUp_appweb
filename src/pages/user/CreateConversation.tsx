@@ -4,7 +4,6 @@ import SearchBar from "../../components/common/SearchBar";
 import ButtonAddMember from "../../components/user/createConversation/ButtonAddMember";
 import InputMember from "../../components/user/createConversation/InputMember";
 import createConversation from "../../hooks/conversations/createConversation";
-import { useNavigate } from "react-router-dom";
 import UserPicItem from "../../components/items/ConversationPicItem";
 
 interface CreateConversationProps {
@@ -14,7 +13,6 @@ interface CreateConversationProps {
 const CreateConversation: React.FC<CreateConversationProps> = ({
   setShowCreateGroup,
 }) => {
-  const navigate = useNavigate();
   const [nbMembers, setNbMembers] = useState<number>(1);
   const [conversationName, setConversationName] = useState<string | undefined>(
     undefined
@@ -59,7 +57,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
 
     createConversation(formData).then((conversation) => {
       setShowCreateGroup(false);
-      navigate(`/${conversation._id}`);
+      window.location.href =`/${conversation._id}`;
     });
   };
 
