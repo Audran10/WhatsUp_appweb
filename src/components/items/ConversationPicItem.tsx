@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 
-interface UserPicItemProps {
+interface ConversationPicItemProps {
   placeholder: string;
-  picture: string;
-  setUserPicture: (file: File | undefined) => void;
+  setConversationPicture: (file: File | undefined) => void;
 }
 
-export const UserPicItem: React.FC<UserPicItemProps> = ({
+export const ConversationPicItem: React.FC<ConversationPicItemProps> = ({
   placeholder,
-  picture,
-  setUserPicture
+  setConversationPicture
 }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const userDefaultPicture = `url('src/assets/defaultAvatar.png')`;
+  const conversationPicture = `url('src/assets/defaultAvatar.png')`;
 
   const imageStyle = {
-    backgroundImage: selectedFile ? `url(${URL.createObjectURL(selectedFile)})` : (picture ? `url(${picture})` : userDefaultPicture),
+    backgroundImage: selectedFile ? `url(${URL.createObjectURL(selectedFile)})` : conversationPicture,
     backgroundPosition: "center",
     backgroundSize: "cover",
   };
@@ -25,7 +23,7 @@ export const UserPicItem: React.FC<UserPicItemProps> = ({
     const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
-      setUserPicture(file);
+      setConversationPicture(file);
     }
   };
 
@@ -53,4 +51,4 @@ export const UserPicItem: React.FC<UserPicItemProps> = ({
   );
 };
 
-export default UserPicItem;
+export default ConversationPicItem;

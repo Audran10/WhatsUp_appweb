@@ -6,12 +6,15 @@ import CreateConversation from "../../../pages/user/CreateConversation";
 import ProfilePage from "../../../pages/user/ProfilePage";
 import getMyConversations from "../../../hooks/conversations/getMyConversations";
 import Conversation from "../../../models/Conversation";
-import { formatDate } from "../../../utils/formatDate";
+import { formatListConversationDate } from "../../../utils/formatDate";
 import findSenderMessage from "../../../utils/findSenderMessage";
 import { Outlet } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 const Layout: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.value);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversations, setSelectedConversations] = useState<
     Conversation[] | []
@@ -19,6 +22,10 @@ const Layout: React.FC = () => {
   const [showCreateGroup, setShowCreateGroup] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [isLoading, setLoading] = useState(true);
+
+  if (!user) {
+    return <div>Utilisateur non trouvé</div>;
+  }
 
   useEffect(() => {
     getMyConversations().then((data) => {
@@ -57,6 +64,7 @@ const Layout: React.FC = () => {
         {!showCreateGroup && !showProfile && (
           <>
             <LayoutTop
+              profilePicture={user.picture_url}
               setShowCreateGroup={setShowCreateGroup}
               setShowProfile={setShowProfile}
             />
@@ -79,7 +87,9 @@ const Layout: React.FC = () => {
                       : ""
                   }
                   lastMessage={conversation.last_message?.content}
-                  date={formatDate(conversation.last_message?.created_at)}
+                  date={formatListConversationDate(
+                    conversation.last_message?.created_at
+                  )}
                 />
               ))}
             </div>
@@ -87,7 +97,7 @@ const Layout: React.FC = () => {
         )}
       </div>
 
-      <div className="flex flex-col w-[70%] bg-mainBeige container">
+      <div className="flex flex-col w-[70%] bg-[url(/src/assets/conversation_background.png)] container">
         <Outlet />
       </div>
     </div>

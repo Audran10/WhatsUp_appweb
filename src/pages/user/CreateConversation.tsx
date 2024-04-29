@@ -5,7 +5,7 @@ import ButtonAddMember from "../../components/user/createConversation/ButtonAddM
 import InputMember from "../../components/user/createConversation/InputMember";
 import createConversation from "../../hooks/conversations/createConversation";
 import { useNavigate } from "react-router-dom";
-import UserPicItem from "../../components/items/UserPicItem";
+import UserPicItem from "../../components/items/ConversationPicItem";
 
 interface CreateConversationProps {
   setShowCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,7 +58,6 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     }
 
     createConversation(formData).then((conversation) => {
-      console.log("conv", conversation);
       setShowCreateGroup(false);
       navigate(`/${conversation._id}`);
     });
@@ -74,7 +73,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
       </div>
 
       <UserPicItem
-        placeholder="AJOUTER UNE PHOTO A LA CONVERSATION"
+        placeholder="Ajouter une photo à la conversation"
         setConversationPicture={setConversationPicture}
       />
 
