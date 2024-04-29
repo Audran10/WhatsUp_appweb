@@ -5,13 +5,16 @@ import { setUser } from '../../reducers/userSlice';
 import InputProfileItem from '../../components/items/InputProfileItem';
 import UserPicItem from '../../components/items/UserPicItem';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { IoExitOutline } from 'react-icons/io5';
 import updateMyUser from '../../hooks/users/updateMyUser';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfilePageProps {
   setShowProfile: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.value);
   const [userPicture, setUserPicture] = useState<File | undefined>(undefined);
@@ -44,16 +47,25 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
     });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    dispatch(setUser(null));
+    navigate('/login');
+  };
+
   return (
     <div className="h-full justify-center items-center bg-secondaryWhite">
-      <div className="flex flex-row gap-8 h-[14%] p-6 items-end bg-mainGreen">
-        <button
-          onClick={() => {
-            setShowProfile(false);
-          }}>
-          <FaArrowLeft className="h-6 w-6 text-mainWhite" />
+      <div className="flex h-[14%] w-full p-6 items-end justify-between bg-mainGreen">
+        <div className="flex gap-8">
+          <button onClick={() => setShowProfile(false)}>
+            <FaArrowLeft className="h-6 w-6 text-mainWhite" />
+          </button>
+          <h1 className="text-2xl text-mainWhite">Profile</h1>
+        </div>
+
+        <button onClick={() => handleLogout()} className="flex justify-end">
+          <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
         </button>
-        <h1 className="text-2xl text-mainWhite">Profile</h1>
       </div>
 
       <UserPicItem

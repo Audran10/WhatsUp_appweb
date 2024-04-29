@@ -19,10 +19,10 @@ export async function RegisterHook({
   };
 
   try {
-    const response = await fetch('http://localhost:3000/users/register', {
-      method: 'POST',
+    const response = await fetch("http://localhost:3000/users/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     });
@@ -31,10 +31,9 @@ export async function RegisterHook({
       throw new Error(`Error! status: ${response.status}`);
     }
 
-    const result = await response.json();
-    console.log('Success:', result);
+    return response.json();
   } catch (error) {
-    console.error('Error:', error);
-    throw new Error('Error! status: 400');
+    console.error("Error:", error);
+    throw new Error("Error! status: 400");
   }
 }

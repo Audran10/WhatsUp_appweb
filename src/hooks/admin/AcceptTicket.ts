@@ -3,10 +3,10 @@ export async function AcceptTicket(ticketId: string) {
     const response = await fetch(
       `http://localhost:3000/tickets/accept/${ticketId}`,
       {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       }
     );

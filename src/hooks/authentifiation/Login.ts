@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../reducers/userSlice';
-import User from '../../models/User';
+import { useDispatch } from "react-redux";
+import { setUser } from "../../reducers/userSlice";
+import User from "../../models/User";
 
 interface LoginHookArgs {
   email?: string;
@@ -28,10 +28,10 @@ export const useLogin = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/users/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/users/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
@@ -41,7 +41,7 @@ export const useLogin = () => {
       }
 
       const result: LoginResponse = await response.json();
-      localStorage.setItem('access_token', result.access_token);
+      localStorage.setItem("access_token", result.access_token);
       dispatch(setUser(result.user));
     } catch (error) {
       throw error;
