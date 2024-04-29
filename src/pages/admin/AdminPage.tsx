@@ -53,8 +53,7 @@ const AdminPage: React.FC = () => {
                 <li key={idx}>
                   <button
                     onClick={() => handlePageChange(item.name)}
-                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150"
-                  >
+                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
                     <div className="text-gray-500">{item.icon}</div>
                     {item.name}
                   </button>
@@ -66,7 +65,7 @@ const AdminPage: React.FC = () => {
                 <div className="flex items-center gap-x-4">
                   <img
                     alt="profilePicture"
-                    src={user?.profilePicture}
+                    src={user?.picture}
                     className="w-12 h-12 rounded-full"
                   />
                   <div>
@@ -75,8 +74,7 @@ const AdminPage: React.FC = () => {
                     </span>
                     <Link
                       to="../profile"
-                      className="block mt-px text-gray-600 hover:text-indigo-600 text-xs"
-                    >
+                      className="block mt-px text-gray-600 hover:text-indigo-600 text-xs">
                       Voir mon profil
                     </Link>
                   </div>

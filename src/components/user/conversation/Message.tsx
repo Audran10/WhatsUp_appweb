@@ -1,5 +1,5 @@
-import React from "react";
-import User from "../../../models/User";
+import React from 'react';
+import User from '../../../models/User';
 
 interface MessageProps {
   myMessage: boolean;
@@ -37,9 +37,7 @@ const Message: React.FC<MessageProps> = ({
             alt="logo"
           />
           <div className="flex flex-col bg-mainWhite rounded-xl p-2 max-w-[60%] relative">
-            <h1 className="text-base text-red-300">
-              ~ {sender?.pseudo}
-            </h1>
+            <h1 className="text-base text-red-300">~ {sender?.pseudo}</h1>
             <div className="flex">
               <span className="w-[95%] text-base flex items-start mr-2">
                 {content}

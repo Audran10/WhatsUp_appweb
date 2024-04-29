@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LayoutCategory } from './layout/LayoutCategory';
 import { UserItem } from './items/UserItem';
-import { User } from '../../models/User';
+import User from '../../models/User';
 
 export const Moderation: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

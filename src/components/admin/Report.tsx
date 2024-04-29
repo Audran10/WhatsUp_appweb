@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { LayoutCategory } from './layout/LayoutCategory';
 import { TicketItem } from './items/TicketItem';
 import { Ticket } from '../../models/Ticket';
+import { CancelTicket } from '../../hooks/admin/CancelTicket';
+import { AcceptTicket } from '../../hooks/admin/AcceptTicket';
 
 export const Report: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -30,6 +32,20 @@ export const Report: React.FC = () => {
     fetchTickets();
   }, []);
 
+  const handleCancel = async (ticketId: string) => {
+    await CancelTicket(ticketId);
+    setTickets(tickets.filter((ticket) => ticket._id !== ticketId));
+  };
+
+  const handleAccept = async (ticketId: string) => {
+    await AcceptTicket(ticketId);
+    setTickets(tickets.filter((ticket) => ticket._id !== ticketId));
+  };
+
+  if (!tickets) {
+    return null;
+  }
+
   return (
     <LayoutCategory
       panelName={'Report'}
@@ -43,7 +59,9 @@ export const Report: React.FC = () => {
           ticketId={ticket._id}
           reporter={ticket.reporter}
           content={ticket.content}
-          senderUsername={ticket.senderUsername}
+          senderUsername={ticket.sender_username}
+          handleCancel={handleCancel}
+          handleAccept={handleAccept}
         />
       ))}
     </LayoutCategory>
