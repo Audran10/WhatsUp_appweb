@@ -5,6 +5,7 @@ import getConversationById from "../../hooks/conversations/getConversationById";
 import Conversation from "../../models/Conversation";
 import { ClipLoader } from "react-spinners";
 import HeaderMessage from "../../components/user/conversation/HeaderMessage";
+import DateIndicator from "../../components/user/conversation/DateIndicator";
 import Message from "../../components/user/conversation/Message";
 import InputMessage from "../../components/user/conversation/InputMessage";
 import { useSelector } from "react-redux";
@@ -91,15 +92,24 @@ const ConversationPage: React.FC = () => {
         picture={conversation?.picture_url}
       />
       <div className="flex-grow w-full overflow-y-auto" ref={messagesEndRef}>
-        {conversation?.messages.map((message) => (
-          <Message
-            key={message._id}
-            myMessage={message.sender_id === user?._id}
-            sender={findSenderMessage(conversation, message.sender_id)}
-            content={message.content}
-            date={formatDateInHour(message.created_at)}
-          />
-        ))}
+        {conversation?.messages.map((message, index) => {
+          const previousMessage = index > 0 ? conversation.messages[index - 1] : null;
+          return (
+            <React.Fragment key={message._id}>
+              <DateIndicator
+                dateMessage={message.created_at}
+                datePreviousMessage={previousMessage ? previousMessage.created_at : null}
+              />
+              <Message
+                key={message._id}
+                myMessage={message.sender_id === user?._id}
+                sender={findSenderMessage(conversation, message.sender_id)}
+                content={message.content}
+                date={formatDateInHour(message.created_at)}
+              />
+            </React.Fragment>
+          );
+        })}
       </div>
       <InputMessage onSend={sendMessage} />
     </>

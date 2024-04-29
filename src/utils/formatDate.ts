@@ -1,5 +1,7 @@
 interface FormattedDate {
-  day: string;
+  month: string;
+  dayWeek: string;
+  dayMonth: string;
   hour: string;
 }
 
@@ -13,7 +15,9 @@ function dateToObject(date: Date): FormattedDate | "" {
 
   if (today.getDate() === dateToCompare.getDate()) {
     return {
-      day: "Aujourd'hui",
+      month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
+      dayWeek: "Aujourd'hui",
+      dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
       hour: dateToCompare.toLocaleString("fr-FR", {
         hour: "numeric",
         minute: "numeric",
@@ -24,7 +28,9 @@ function dateToObject(date: Date): FormattedDate | "" {
   today.setDate(today.getDate() - 1);
   if (today.getDate() === dateToCompare.getDate()) {
     return {
-      day: "Hier",
+      month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
+      dayWeek: "Hier",
+      dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
       hour: dateToCompare.toLocaleString("fr-FR", {
         hour: "numeric",
         minute: "numeric",
@@ -33,24 +39,14 @@ function dateToObject(date: Date): FormattedDate | "" {
   }
 
   return {
-    day: dateToCompare.toLocaleString("fr-FR", { weekday: "long" }),
+    month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
+    dayWeek: dateToCompare.toLocaleString("fr-FR", { weekday: "long" }),
+    dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
     hour: dateToCompare.toLocaleString("fr-FR", {
       hour: "numeric",
       minute: "numeric",
     }),
   };
-}
-
-export function formatDate(date: Date) {
-  const dateToCompare = dateToObject(date);
-  if (typeof dateToCompare === "object") {
-    if (dateToCompare.day === "Aujourd'hui") {
-      return dateToCompare.hour;
-    }
-    return dateToCompare.day;
-  } else {
-    return dateToCompare;
-  }
 }
 
 export function formatDateInHour(date: Date) {
@@ -60,4 +56,39 @@ export function formatDateInHour(date: Date) {
   } else {
     return dateToCompare;
   }
+}
+
+export function formatListConversationDate(date: Date) {
+  const dateToCompare = dateToObject(date);
+  if (typeof dateToCompare === "object") {
+    if (dateToCompare.dayWeek === "Aujourd'hui") {
+      return dateToCompare.hour;
+    }
+    return dateToCompare.dayWeek;
+  } else {
+    return dateToCompare;
+  }
+}
+
+export function formatConversationDate(date: Date) {
+  const dateObject: FormattedDate | "" = dateToObject(date);
+  const todayObject: FormattedDate | "" = dateToObject(new Date());
+
+  if (typeof dateObject === "object" && typeof todayObject === "object") {
+    if (dateObject.dayWeek === "Aujourd'hui") {
+      return dateObject.dayWeek;
+    }
+
+    if (dateObject.dayWeek === "Hier") {
+      return dateObject.dayWeek;
+    }
+
+    if (parseInt(todayObject.dayMonth) - parseInt(dateObject.dayMonth) >= 7) {
+      return `${dateObject.dayWeek} ${dateObject.dayMonth} ${dateObject.month}`;
+    }
+
+    return dateObject.dayWeek;
+  }
+
+  return "";
 }
