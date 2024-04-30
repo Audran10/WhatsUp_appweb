@@ -54,8 +54,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
       const updatedUser = await BecomeAdmin(userId);
 
       if (updatedUser) {
-        console.log('Updated User:', updatedUser);
-        dispatch(setUser(updatedUser)); // Update the Redux store
+        dispatch(setUser(updatedUser));
       }
 
       navigate('/admin');
