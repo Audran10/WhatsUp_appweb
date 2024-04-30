@@ -79,15 +79,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
           <h1 className="text-2xl text-mainWhite">Profile</h1>
         </div>
 
-        <button
-          onClick={() => handleAdmin(user._id)}
-          className="flex justify-end">
-          <MdOutlineAdminPanelSettings className="flex h-7 w-7 text-mainWhite" />
-        </button>
+        <div className="flex gap-3 ml-auto">
+          <button onClick={() => handleAdmin(user._id)} className="flex">
+            <MdOutlineAdminPanelSettings className="flex h-7 w-7 text-mainWhite" />
+          </button>
 
-        <button onClick={() => handleLogout()} className="flex justify-end">
-          <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
-        </button>
+          <button onClick={() => handleLogout()} className="flex">
+            <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
+          </button>
+        </div>
       </div>
 
       <UserPicItem

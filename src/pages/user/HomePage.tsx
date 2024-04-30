@@ -1,12 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import React from 'react';
 
 const HomePage: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.value);
-  console.log(user);
-
-  return <h1 className="text-4xl text-center">Accueil</h1>;
+  return null;
 };
 
 export default HomePage;
