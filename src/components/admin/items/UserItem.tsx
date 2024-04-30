@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { banUser } from '../../../hooks/admin/BanUser';
-import { unbanUser } from '../../../hooks/admin/UnbanUser';
-import { fetchUser } from '../../../hooks/FetchUser';
+import { BanUser } from '../../../hooks/admin/BanUser';
+import { UnbanUser } from '../../../hooks/admin/UnbanUser';
+import { FetchUserById } from '../../../hooks/FetchUserById';
 
 export const UserItem: React.FC<{
   userId: string;
@@ -12,40 +12,35 @@ export const UserItem: React.FC<{
   const [isBanned, setIsBanned] = useState<boolean>(false);
 
   const updateUserRole = useCallback(() => {
-    const fetchUserData = async () => {
-      const data = await fetchUser(userId);
+    FetchUserById(userId).then((data) => {
       if (data.role === 'banned') {
         setIsBanned(true);
       } else {
         setIsBanned(false);
       }
-    };
-
-    fetchUserData();
+    });
   }, []);
 
   const handleBan = async (id: string) => {
-    await banUser(id);
+    await BanUser(id);
     updateUserRole();
   };
 
   const handleUnban = async (id: string) => {
-    await unbanUser(id);
+    await UnbanUser(id);
     updateUserRole();
   };
 
   return (
     <div className="w-full flex flex-row p-4 border-b hover:bg-gray-50 items-center">
-      <div className="w-1/5 font-semibold text-lg text-gray-800 text-left ">
-        {`n°${userId}`}
-      </div>
-      <div className="w-1/5 text-gray-500 text-left">
+      <div className="w-1/5 text-gray-800 text-left ">{`n°${userId}`}</div>
+      <div className="w-1/5 text-gray-500 text-center">
         <span className="text-gray-700">{email}</span>
       </div>
-      <div className="w-1/5 text-gray-500 text-left">
+      <div className="w-1/5 text-gray-500 text-center">
         <span className="text-gray-700">{username}</span>
       </div>
-      <div className="w-1/5 text-gray-500 text-left">
+      <div className="w-1/5 text-gray-500 text-center">
         <span className="text-gray-700">{phone}</span>
       </div>
       <div className="w-1/5 text-center">

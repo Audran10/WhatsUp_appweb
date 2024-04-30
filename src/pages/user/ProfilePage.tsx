@@ -8,6 +8,8 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { IoExitOutline } from 'react-icons/io5';
 import updateMyUser from '../../hooks/users/updateMyUser';
 import { useNavigate } from 'react-router-dom';
+import { BecomeAdmin } from '../../hooks/admin/BecomeAdmin';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 interface ProfilePageProps {
   setShowProfile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,6 +49,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
     });
   };
 
+  const handleAdmin = async (userId: string) => {
+    try {
+      const updatedUser = await BecomeAdmin(userId);
+
+      if (updatedUser) {
+        console.log('Updated User:', updatedUser);
+        dispatch(setUser(updatedUser)); // Update the Redux store
+      }
+
+      navigate('/admin');
+    } catch (error) {
+      console.error('Error making user an admin:', error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     dispatch(setUser(null));
@@ -62,6 +79,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
           </button>
           <h1 className="text-2xl text-mainWhite">Profile</h1>
         </div>
+
+        <button
+          onClick={() => handleAdmin(user._id)}
+          className="flex justify-end">
+          <MdOutlineAdminPanelSettings className="flex h-7 w-7 text-mainWhite" />
+        </button>
 
         <button onClick={() => handleLogout()} className="flex justify-end">
           <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
