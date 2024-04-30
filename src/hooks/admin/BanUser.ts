@@ -1,10 +1,10 @@
-export async function banUser(userId: string) {
+export async function BanUser(userId: string) {
   try {
     const response = await fetch(`http://localhost:3000/users/ban/${userId}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
     });
 

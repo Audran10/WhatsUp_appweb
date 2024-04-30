@@ -74,9 +74,9 @@ const AdminPage: React.FC = () => {
                       {user?.pseudo}
                     </span>
                     <Link
-                      to="/profile"
+                      to="/"
                       className="block mt-px text-gray-600 hover:text-indigo-600 text-xs">
-                      Voir mon profil
+                      Voir la page principale
                     </Link>
                   </div>
                 </div>

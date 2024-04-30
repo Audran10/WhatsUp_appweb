@@ -1,7 +1,7 @@
-export async function UnbanUser(userId: string) {
+export const BecomeAdmin = async (userId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/users/unban/${userId}`,
+      `http://localhost:3000/users/admin/${userId}`,
       {
         method: 'PUT',
         headers: {
@@ -12,10 +12,12 @@ export async function UnbanUser(userId: string) {
     );
 
     if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(`Failed to unban user: ${errorMessage}`);
+      throw new Error('Failed to fetch');
     }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching users:', error);
   }
-}
+};
