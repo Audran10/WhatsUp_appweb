@@ -73,12 +73,11 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
         <div
           className={`flex justify-end w-[97%] h-auto ${
             lastMessage?.sender_id === message.sender_id ? 'pb-1' : 'pt-4 pb-1'
-          }`}
-        >
-          <div className='flex flex-col bg-secondaryGreen rounded-xl p-2 max-w-[60%] relative'>
+          }`}>
+          <div className="flex flex-col bg-secondaryGreen rounded-xl p-2 max-w-[60%] relative">
             <div>
-              <span className='text-base break-words'>{message.content}</span>
-              <span className='text-secondaryGray text-xs float-right mt-[0.4rem] ml-2'>
+              <span className="text-base break-words">{message.content}</span>
+              <span className="text-secondaryGray text-xs float-right mt-[0.4rem] ml-2">
                 {message.created_at && formatDateInHour(message.created_at)}
               </span>
             </div>
@@ -88,30 +87,28 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
         <div
           className={`flex w-full h-auto relative ${
             shouldDisplayProfilePicture ? 'pt-4 pb-1' : 'pb-1 pl-11'
-          }`}
-        >
+          }`}>
           {shouldDisplayProfilePicture && (
             <img
-              className='w-7 h-7 rounded-full object-center object-cover m-2'
+              className="w-7 h-7 rounded-full object-center object-cover m-2"
               src={sender.picture_url ?? defaultAvatar}
-              alt='logo'
+              alt="logo"
             />
           )}
 
           <div
-            className='flex bg-mainWhite rounded-xl p-2 max-w-[60%]'
+            className="flex bg-mainWhite rounded-xl p-2 max-w-[60%]"
             onMouseEnter={toggleMessageOption}
-            onMouseLeave={toggleMessageOption}
-          >
-            <div className='max-w-[95%]'>
+            onMouseLeave={toggleMessageOption}>
+            <div className="max-w-[95%]">
               {lastMessage?.sender_id !== message.sender_id && (
-                <h1 className='text-base text-red-300'>{sender?.pseudo}</h1>
+                <h1 className="text-base text-red-300">{sender?.pseudo}</h1>
               )}
-              <span className='text-base break-words'>{message.content}</span>
+              <span className="text-base break-words">{message.content}</span>
             </div>
 
-            <div className='h-full flex flex-col flex-grow justify-between ml-2'>
-              <button className='self-center' onClick={openOption}>
+            <div className="h-full flex flex-col flex-grow justify-between ml-2">
+              <button className="self-center" onClick={openOption}>
                 <IoIosArrowDown
                   className={`h-5 w-5 ${
                     showMessageOption
@@ -120,7 +117,7 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
                   }`}
                 />
               </button>
-              <span className='text-secondaryGray text-xs flex justify-center'>
+              <span className="text-secondaryGray text-xs flex justify-center">
                 {message.created_at && formatDateInHour(message.created_at)}
               </span>
             </div>
@@ -128,10 +125,9 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
 
           {optionIsOpen && (
             <button
-              className='flex bg-mainWhite py-2 px-4 rounded h-10 ml-1 hover:bg-secondaryWhite text-mainGray'
+              className="flex bg-mainWhite py-2 px-4 rounded h-10 ml-1 hover:bg-secondaryWhite text-mainGray"
               onClick={handleReport}
-              ref={optionRef}
-            >
+              ref={optionRef}>
               {t('report')}
             </button>
           )}

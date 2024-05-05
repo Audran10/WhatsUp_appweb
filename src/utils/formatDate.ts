@@ -105,8 +105,6 @@ export function formatConversationDate(date: Date) {
       });
     }
   }
-
-  return '';
 }
 export function formatDateComplete(date: Date) {
   const dateToCompare = new Date(date);
