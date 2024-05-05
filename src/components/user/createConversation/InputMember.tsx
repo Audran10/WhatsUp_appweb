@@ -25,6 +25,7 @@ const InputMember: React.FC<InputMemberProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
+        maxLength={10}
       />
 
       {index > 0 && (

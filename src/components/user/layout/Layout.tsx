@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import LayoutTop from './LayoutTop';
-import SearchBar from '../../common/SearchBar';
-import LayoutDiscussionGroupCard from './LayoutDiscussionGroupCard';
-import CreateConversation from '../../../pages/user/CreateConversation';
-import ProfilePage from '../../../pages/user/ProfilePage';
-import getMyConversations from '../../../hooks/conversations/getMyConversations';
-import Conversation from '../../../models/Conversation';
-import { formatListConversationDate } from '../../../utils/formatDate';
-import findSenderMessage from '../../../utils/findSenderMessage';
-import { Outlet } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React, { useEffect, useState } from "react";
+import LayoutTop from "./LayoutTop";
+import SearchBar from "../../common/SearchBar";
+import LayoutDiscussionGroupCard from "./LayoutDiscussionGroupCard";
+import CreateConversation from "../../../pages/user/CreateConversation";
+import ProfilePage from "../../../pages/user/ProfilePage";
+import getMyConversations from "../../../hooks/conversations/getMyConversations";
+import Conversation from "../../../models/Conversation";
+import { formatListConversationDate } from "../../../utils/formatDate";
+import findSenderMessage from "../../../utils/findSenderMessage";
+import { Outlet } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Layout: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
@@ -50,20 +50,22 @@ const Layout: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen w-full bg-mainBeige">
-        <ClipLoader color="#99999e" size={50} />
+      <div className='flex justify-center items-center h-screen w-full bg-mainBeige'>
+        <ClipLoader color='#99999e' size={50} />
       </div>
     );
   }
 
   return (
-    <div className="flex h-full w-full">
-      <div className="flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container">
+    <div className='flex h-full w-full'>
+      <div className='flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container'>
         {showCreateGroup && !showProfile && (
-          <CreateConversation setShowCreateGroup={setShowCreateGroup} />
+          <div className='h-full' data-aos={"fade-right"}>
+            <CreateConversation setShowCreateGroup={setShowCreateGroup} />
+          </div>
         )}
         {showProfile && !showCreateGroup && (
-          <div className="h-full" data-aos={'fade-right'}>
+          <div className='h-full' data-aos={"fade-right"}>
             <ProfilePage setShowProfile={setShowProfile} />
           </div>
         )}
@@ -76,35 +78,42 @@ const Layout: React.FC = () => {
               setShowProfile={setShowProfile}
             />
 
-            <SearchBar onChange={handleChange} placeholder="Recherchez" />
+            <SearchBar onChange={handleChange} placeholder='Recherchez' />
 
-            <div className="container overflow-y-auto">
-              {selectedConversations.map((conversation) => (
-                <LayoutDiscussionGroupCard
-                  key={conversation._id}
-                  conversationId={conversation._id}
-                  groupPicture={conversation.picture_url}
-                  name={conversation.name}
-                  lastSender={
-                    conversation.last_message
-                      ? findSenderMessage(
-                          conversation,
-                          conversation.last_message?.sender_id
-                        ).pseudo
-                      : ''
-                  }
-                  lastMessage={conversation.last_message?.content}
-                  date={formatListConversationDate(
-                    conversation.last_message?.created_at
-                  )}
-                />
-              ))}
+            <div className='container overflow-y-auto'>
+              {selectedConversations
+                .slice()
+                .sort(
+                  (a, b) =>
+                    new Date(b.updated_at).getTime() -
+                    new Date(a.updated_at).getTime()
+                )
+                .map((conversation) => (
+                  <LayoutDiscussionGroupCard
+                    key={conversation._id}
+                    conversationId={conversation._id}
+                    groupPicture={conversation.picture_url}
+                    name={conversation.name}
+                    lastSender={
+                      conversation.last_message
+                        ? findSenderMessage(
+                            conversation,
+                            conversation.last_message?.sender_id
+                          ).pseudo
+                        : ""
+                    }
+                    lastMessage={conversation.last_message?.content}
+                    date={formatListConversationDate(
+                      conversation.last_message?.created_at
+                    )}
+                  />
+                ))}
             </div>
           </>
         )}
       </div>
 
-      <div className="flex flex-col w-[70%] bg-secondaryWhite container">
+      <div className='flex flex-col w-[70%] bg-secondaryWhite container'>
         <Outlet />
       </div>
     </div>
