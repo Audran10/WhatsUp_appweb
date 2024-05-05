@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import defaultAvatar from "../../../assets/defaultAvatar.png";
 import leaveConversation from "../../../hooks/conversations/leaveConversation";
@@ -12,7 +12,7 @@ interface HeaderMessageProps {
 const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
   const { conversationId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
-  const optionRef = React.useRef<HTMLDivElement>(null);
+  const optionRef = useRef<HTMLDivElement>(null);
 
   if (!conversationId) {
     return null;
@@ -52,16 +52,15 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
           src={picture ?? defaultAvatar}
           alt="logo"
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <h1 className="text-xl font-semibold ml-4">{title}</h1>
-          <span className="text-secondaryGray ml-4">En ligne</span>
         </div>
       </div>
       <button onClick={openMenu} className={`flex justify-center items-center h-10 w-10 ${isOpen ? "bg-gray-300 rounded-full" : null}`}>
         <BsThreeDotsVertical className="text-mainGray text-2xl" />
       </button>
       {isOpen && (
-        <div className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1" ref={optionRef}>
+        <div className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1 z-20" ref={optionRef}>
           <button onClick={leaveGroup} className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
             Quitter le groupe
           </button>

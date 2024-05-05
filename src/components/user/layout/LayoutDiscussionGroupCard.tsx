@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import defaultAvatar from "../../../assets/defaultAvatar.png";
-import { formatText } from "../../../utils/formatText";
 
 interface LayoutDiscussionGroupCardProps {
   conversationId: string;
@@ -29,18 +28,18 @@ const LayoutDiscussionGroupCard: React.FC<LayoutDiscussionGroupCardProps> = ({
           src={groupPicture ?? defaultAvatar}
           alt="logo"
         />
-        <div className="flex flex-col w-full h-full p-2">
+        <div className="flex flex-col w-full h-full p-2  whitespace-nowrap overflow-hidden">
           <div className="flex h-[50%] w-full justify-between items-center">
             <h1 className="text-xl font-semibold">{name}</h1>
             {lastMessage && (
-              <span className="text-sm text-secondaryGray p-2">{date}</span>
+              <span className="text-sm text-secondaryGray">{date}</span>
             )}
           </div>
-          <div className="flex h-[50%] w-full mt-1">
+          <div className="flex h-[50%] w-full mt-1 items-center">
             {lastMessage ? (
               <>
-                <span className="text-sm text-secondaryGray">
-                  {lastSender}: {formatText(lastMessage)}
+                <span className="text-sm text-secondaryGray overflow-hidden text-ellipsis">
+                  {lastSender}: {lastMessage}
                 </span>
               </>
             ) : (
