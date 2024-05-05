@@ -109,6 +109,7 @@ const ConversationPage: React.FC = () => {
                 myMessage={message.sender_id === user?._id}
                 sender={findSenderMessage(conversation, message.sender_id)}
                 message={message}
+                lastMessage={previousMessage}
               />
             </React.Fragment>
           );

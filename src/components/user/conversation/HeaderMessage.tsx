@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import defaultAvatar from '../../../assets/defaultAvatar.png';
 import leaveConversation from '../../../hooks/conversations/leaveConversation';
@@ -15,7 +15,7 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
   const { setShowDetailsGroup } = useContext(ShowDetailsGroupContext);
 
   const [isOpen, setIsOpen] = useState(false);
-  const optionRef = React.useRef<HTMLDivElement>(null);
+  const optionRef = useRef<HTMLDivElement>(null);
 
   if (!conversationId) {
     return null;
@@ -52,9 +52,8 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
           src={picture ?? defaultAvatar}
           alt="logo"
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <h1 className="text-xl font-semibold ml-4">{title}</h1>
-          <span className="text-secondaryGray ml-4">En ligne</span>
         </div>
       </div>
       <button
