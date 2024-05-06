@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import ButtonAddMember from "../../components/user/createConversation/ButtonAddMember";
-import InputMember from "../../components/user/createConversation/InputMember";
-import createConversation from "../../hooks/conversations/createConversation";
-import UserPicItem from "../../components/items/ConversationPicItem";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { isValidPhoneNumber } from "../../utils/utils";
+import React, { useEffect, useRef, useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import ButtonAddMember from '../../components/user/createConversation/ButtonAddMember';
+import InputMember from '../../components/user/createConversation/InputMember';
+import createConversation from '../../hooks/conversations/createConversation';
+import UserPicItem from '../../components/items/ConversationPicItem';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { isValidPhoneNumber } from '../../utils/utils';
+import { useTranslation } from 'react-i18next';
 
 interface CreateConversationProps {
   setShowCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ interface CreateConversationProps {
 const CreateConversation: React.FC<CreateConversationProps> = ({
   setShowCreateGroup,
 }) => {
+  const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user.value);
   const [nbMembers, setNbMembers] = useState<number>(1);
   const [conversationName, setConversationName] = useState<string | undefined>(
@@ -30,11 +32,11 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
 
   const handleAddMember = () => {
     if (!isValidPhoneNumber(members[nbMembers - 1])) {
-      setError("Veuillez entrer un numéro de téléphone valide");
+      setError(t('new_conversation_error_phone_format'));
       return;
     }
     setNbMembers(nbMembers + 1);
-    setMembers([...members, ""]);
+    setMembers([...members, '']);
     setError(undefined);
     setIsDisabled(true);
   };
@@ -57,11 +59,11 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     } else if (value === user?.phone) {
       newMembers[index] = value;
       setIsDisabled(true);
-      setError("Vous ne pouvez pas vous ajouter vous-même");
+      setError(t('new_conversation_error_ourself'));
     } else if (newMembers.includes(value)) {
       newMembers[index] = value;
       setIsDisabled(true);
-      setError("Ce membre est déjà ajouté");
+      setError(t('new_conversation_error_same_member'));
     } else {
       newMembers[index] = value;
       setIsDisabled(false);
@@ -75,15 +77,15 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     let formData = new FormData();
 
     if (conversationName) {
-      formData.append("name", conversationName);
+      formData.append('name', conversationName);
     }
 
     members.forEach((user) => {
-      formData.append("users[]", user);
+      formData.append('users[]', user);
     });
 
     if (conversationPicture) {
-      formData.append("file", conversationPicture);
+      formData.append('file', conversationPicture);
     }
 
     createConversation(formData).then((conversation) => {
@@ -108,19 +110,19 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
         <button onClick={() => setShowCreateGroup(false)}>
           <FaArrowLeft className='h-6 w-6 text-mainWhite' />
         </button>
-        <h1 className='text-2xl text-mainWhite'>Nouvelle conversation</h1>
+        <h1 className='text-2xl text-mainWhite'>{t('new_conversation')}</h1>
       </div>
 
       <div className='h-[86%] w-full'>
         <UserPicItem
-          placeholder='Ajouter une photo à la conversation'
+          placeholder={t('new_conversation_picture')}
           setConversationPicture={setConversationPicture}
         />
 
         <input
           type='text'
           className='w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-2 mt-2'
-          placeholder='Nom de la conversation (optionnel)'
+          placeholder={t('new_conversation_name')}
           onChange={(e) => setConversationName(e.target.value)}
         />
         <div
@@ -131,10 +133,10 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
             <InputMember
               key={index}
               index={index}
-              value={members[index] || ""}
+              value={members[index] || ''}
               onClick={handleRemoveMember}
               onChange={(value) => handleInputChange(index, value)}
-              placeholder={`Membre ${index + 1}`}
+              placeholder={`${t('new_conversation_member')} ${index + 1}`}
             />
           ))}
           <p className='text-red-400 text-base ml-2'>{error}</p>
@@ -142,7 +144,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
           <div className='ml-2'>
             <ButtonAddMember
               onClick={handleAddMember}
-              placeholder='Ajouter un membre'
+              placeholder={t('new_conversation_add_member')}
               disabled={isDisabled}
             />
           </div>
@@ -153,12 +155,12 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
             onClick={handleCreateConversation}
             className={`p-2 rounded-lg ${
               isDisabled
-                ? "bg-secondaryWhite text-secondaryGray"
-                : "bg-mainGreen text-mainWhite"
+                ? 'bg-secondaryWhite text-secondaryGray'
+                : 'bg-mainGreen text-mainWhite'
             }`}
             disabled={isDisabled}
           >
-            Créez la conversation
+            {t('new_conversation_create')}
           </button>
         </div>
       </div>
