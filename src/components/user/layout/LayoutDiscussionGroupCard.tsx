@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import defaultAvatar from "../../../assets/defaultAvatar.png";
-import { formatText } from "../../../utils/formatText";
+import React from 'react';
+import { Link, useParams } from 'react-router-dom';
+import defaultAvatar from '../../../assets/defaultAvatar.png';
+import { formatText } from '../../../utils/formatText';
 
 interface LayoutDiscussionGroupCardProps {
   conversationId: string;
@@ -21,9 +21,13 @@ const LayoutDiscussionGroupCard: React.FC<LayoutDiscussionGroupCardProps> = ({
   date,
 }) => {
   const params = useParams();
+
   return (
     <Link to={`/${conversationId}`}>
-      <div className={`flex w-full h-20 p-4 border-b hover:bg-secondaryWhite hover:cursor-pointer ${params.conversationId === conversationId ? 'bg-secondaryWhite' : ''}`}>
+      <div
+        className={`flex w-full h-20 p-4 border-b hover:bg-secondaryWhite hover:cursor-pointer ${
+          params.conversationId === conversationId ? 'bg-secondaryWhite' : ''
+        }`}>
         <img
           className="w-14 h-14 rounded-full object-center object-cover"
           src={groupPicture ?? defaultAvatar}
@@ -38,11 +42,9 @@ const LayoutDiscussionGroupCard: React.FC<LayoutDiscussionGroupCardProps> = ({
           </div>
           <div className="flex h-[50%] w-full mt-1">
             {lastMessage ? (
-              <>
-                <span className="text-sm text-secondaryGray">
-                  {lastSender}: {formatText(lastMessage)}
-                </span>
-              </>
+              <span className="text-sm text-secondaryGray">
+                {lastSender}: {formatText(lastMessage)}
+              </span>
             ) : (
               <span className="text-sm text-secondaryGray">Aucun message</span>
             )}

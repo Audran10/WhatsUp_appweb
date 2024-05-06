@@ -18,7 +18,7 @@ const ConversationPage: React.FC = () => {
   const [conversation, setConversation] = useState<Conversation>(
     {} as Conversation
   );
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const socket = io('http://localhost:3000');
@@ -34,7 +34,7 @@ const ConversationPage: React.FC = () => {
       getConversationById(conversationId).then((data) => {
         setConversation(data);
         joinRoom();
-        setLoading(false);
+        setIsLoading(false);
       });
     }
   }, [conversationId]);

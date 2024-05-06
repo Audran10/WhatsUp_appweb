@@ -5,9 +5,9 @@ interface FormattedDate {
   hour: string;
 }
 
-function dateToObject(date: Date): FormattedDate | "" {
+function dateToObject(date: Date): FormattedDate | '' {
   if (!date) {
-    return "";
+    return '';
   }
 
   const today = new Date();
@@ -15,12 +15,12 @@ function dateToObject(date: Date): FormattedDate | "" {
 
   if (today.getDate() === dateToCompare.getDate()) {
     return {
-      month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
+      month: dateToCompare.toLocaleString('fr-FR', { month: 'long' }),
       dayWeek: "Aujourd'hui",
-      dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
-      hour: dateToCompare.toLocaleString("fr-FR", {
-        hour: "numeric",
-        minute: "numeric",
+      dayMonth: dateToCompare.toLocaleString('fr-FR', { day: 'numeric' }),
+      hour: dateToCompare.toLocaleString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric',
       }),
     };
   }
@@ -28,30 +28,30 @@ function dateToObject(date: Date): FormattedDate | "" {
   today.setDate(today.getDate() - 1);
   if (today.getDate() === dateToCompare.getDate()) {
     return {
-      month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
-      dayWeek: "Hier",
-      dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
-      hour: dateToCompare.toLocaleString("fr-FR", {
-        hour: "numeric",
-        minute: "numeric",
+      month: dateToCompare.toLocaleString('fr-FR', { month: 'long' }),
+      dayWeek: 'Hier',
+      dayMonth: dateToCompare.toLocaleString('fr-FR', { day: 'numeric' }),
+      hour: dateToCompare.toLocaleString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric',
       }),
     };
   }
 
   return {
-    month: dateToCompare.toLocaleString("fr-FR", { month: "long" }),
-    dayWeek: dateToCompare.toLocaleString("fr-FR", { weekday: "long" }),
-    dayMonth: dateToCompare.toLocaleString("fr-FR", { day: "numeric" }),
-    hour: dateToCompare.toLocaleString("fr-FR", {
-      hour: "numeric",
-      minute: "numeric",
+    month: dateToCompare.toLocaleString('fr-FR', { month: 'long' }),
+    dayWeek: dateToCompare.toLocaleString('fr-FR', { weekday: 'long' }),
+    dayMonth: dateToCompare.toLocaleString('fr-FR', { day: 'numeric' }),
+    hour: dateToCompare.toLocaleString('fr-FR', {
+      hour: 'numeric',
+      minute: 'numeric',
     }),
   };
 }
 
 export function formatDateInHour(date: Date) {
   const dateToCompare = dateToObject(date);
-  if (typeof dateToCompare === "object") {
+  if (typeof dateToCompare === 'object') {
     return dateToCompare.hour;
   } else {
     return dateToCompare;
@@ -60,7 +60,7 @@ export function formatDateInHour(date: Date) {
 
 export function formatListConversationDate(date: Date) {
   const dateToCompare = dateToObject(date);
-  if (typeof dateToCompare === "object") {
+  if (typeof dateToCompare === 'object') {
     if (dateToCompare.dayWeek === "Aujourd'hui") {
       return dateToCompare.hour;
     }
@@ -71,15 +71,15 @@ export function formatListConversationDate(date: Date) {
 }
 
 export function formatConversationDate(date: Date) {
-  const dateObject: FormattedDate | "" = dateToObject(date);
-  const todayObject: FormattedDate | "" = dateToObject(new Date());
+  const dateObject: FormattedDate | '' = dateToObject(date);
+  const todayObject: FormattedDate | '' = dateToObject(new Date());
 
-  if (typeof dateObject === "object" && typeof todayObject === "object") {
+  if (typeof dateObject === 'object' && typeof todayObject === 'object') {
     if (dateObject.dayWeek === "Aujourd'hui") {
       return dateObject.dayWeek;
     }
 
-    if (dateObject.dayWeek === "Hier") {
+    if (dateObject.dayWeek === 'Hier') {
       return dateObject.dayWeek;
     }
 
@@ -90,5 +90,14 @@ export function formatConversationDate(date: Date) {
     return dateObject.dayWeek;
   }
 
-  return "";
+  return '';
+}
+
+export function formatDateComplete(date: Date) {
+  const dateInfo: FormattedDate | '' = dateToObject(date);
+  if (typeof dateInfo === 'object') {
+    return `${dateInfo.dayMonth} ${dateInfo.month} à ${dateInfo.hour}`;
+  } else {
+    return dateInfo;
+  }
 }

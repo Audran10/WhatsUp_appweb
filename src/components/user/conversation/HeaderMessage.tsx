@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import defaultAvatar from "../../../assets/defaultAvatar.png";
-import leaveConversation from "../../../hooks/conversations/leaveConversation";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import defaultAvatar from '../../../assets/defaultAvatar.png';
+import leaveConversation from '../../../hooks/conversations/leaveConversation';
+import { useParams } from 'react-router-dom';
+import { ShowDetailsGroupContext } from '../../../provider/ShowDetailsGroupProvider';
 
 interface HeaderMessageProps {
   title: string | undefined;
@@ -11,6 +12,8 @@ interface HeaderMessageProps {
 
 const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
   const { conversationId } = useParams();
+  const { setShowDetailsGroup } = useContext(ShowDetailsGroupContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const optionRef = React.useRef<HTMLDivElement>(null);
 
@@ -24,23 +27,20 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
 
   const leaveGroup = () => {
     leaveConversation(conversationId).then(() => {
-      window.location.href = "/";
+      window.location.href = '/';
     });
   };
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (
-      optionRef.current &&
-      !optionRef.current.contains(e.target as Node)
-    ) {
+    if (optionRef.current && !optionRef.current.contains(e.target as Node)) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -57,12 +57,25 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
           <span className="text-secondaryGray ml-4">En ligne</span>
         </div>
       </div>
-      <button onClick={openMenu} className={`flex justify-center items-center h-10 w-10 ${isOpen ? "bg-gray-300 rounded-full" : null}`}>
+      <button
+        onClick={openMenu}
+        className={`flex justify-center items-center h-10 w-10 ${
+          isOpen ? 'bg-gray-300 rounded-full' : null
+        }`}>
         <BsThreeDotsVertical className="text-mainGray text-2xl" />
       </button>
       {isOpen && (
-        <div className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1" ref={optionRef}>
-          <button onClick={leaveGroup} className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
+        <div
+          className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1"
+          ref={optionRef}>
+          <button
+            onClick={() => setShowDetailsGroup && setShowDetailsGroup(true)}
+            className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
+            Information du groupe
+          </button>
+          <button
+            onClick={leaveGroup}
+            className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
             Quitter le groupe
           </button>
         </div>
