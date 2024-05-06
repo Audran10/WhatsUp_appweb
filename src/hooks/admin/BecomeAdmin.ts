@@ -1,7 +1,7 @@
 export const BecomeAdmin = async (userId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/users/admin/${userId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/users/admin/${userId}`,
       {
         method: 'PUT',
         headers: {

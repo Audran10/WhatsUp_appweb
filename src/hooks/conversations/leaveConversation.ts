@@ -3,7 +3,7 @@ import Conversation from "../../models/Conversation";
 const leaveConversation = async (conversationId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/conversations/${conversationId}/leave`,
+      `${process.env.REACT_APP_BACKEND_URL}/conversations/${conversationId}/leave`,
       {
         method: "PATCH",
         headers: {

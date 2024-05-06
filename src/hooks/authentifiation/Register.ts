@@ -17,10 +17,9 @@ export async function RegisterHook({
     phone: phoneNumber,
     password: password,
   };
-
   try {
-    const response = await fetch("http://localhost:3000/users/register", {
-      method: "POST",
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/register`, {
+      method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
