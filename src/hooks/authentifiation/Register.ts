@@ -18,7 +18,7 @@ export async function RegisterHook({
     password: password,
   };
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/register`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/register`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

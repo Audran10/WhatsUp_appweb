@@ -1,7 +1,7 @@
 export const BecomeAdmin = async (userId: string) => {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/users/admin/${userId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/users/admin/${userId}`,
       {
         method: 'PUT',
         headers: {

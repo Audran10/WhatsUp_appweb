@@ -4,7 +4,7 @@ const createConversation = async (
   formData: FormData
 ): Promise<Conversation> => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/conversations/create`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/conversations/create`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
