@@ -2,7 +2,7 @@
 export async function CancelTicket(ticketId: string) {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/tickets/cancel/${ticketId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/tickets/cancel/${ticketId}`,
       {
         method: "DELETE",
         headers: {

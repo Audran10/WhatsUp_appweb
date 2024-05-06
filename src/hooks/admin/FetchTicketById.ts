@@ -1,6 +1,6 @@
 export const FetchTicketById = async (ticketId: string) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/ticket/${ticketId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/ticket/${ticketId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

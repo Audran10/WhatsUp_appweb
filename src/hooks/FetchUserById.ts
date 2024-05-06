@@ -1,6 +1,6 @@
 export const FetchUserById = async (userId: string) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

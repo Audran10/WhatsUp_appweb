@@ -1,7 +1,7 @@
 export async function UnbanUser(userId: string) {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/users/unban/${userId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/users/unban/${userId}`,
       {
         method: 'PUT',
         headers: {

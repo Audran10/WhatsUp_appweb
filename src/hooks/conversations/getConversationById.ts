@@ -2,7 +2,7 @@
 const getConversationById = async (conversationId: string) => {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/conversations/${conversationId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/conversations/${conversationId}`,
       {
         method: "GET",
         headers: {
