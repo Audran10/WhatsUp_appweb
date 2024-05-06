@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import defaultAvatar from '../../../assets/defaultAvatar.png';
+<<<<<<< HEAD
 import { useTranslation } from 'react-i18next';
+=======
+>>>>>>> 3a1d3f4abc0e3443e567966f40ea3ab24ebb2b1c
 
 interface LayoutDiscussionGroupCardProps {
   conversationId: string;
