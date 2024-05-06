@@ -1,7 +1,8 @@
+
 export async function AcceptTicket(ticketId: string) {
   try {
     const response = await fetch(
-      `http://localhost:3000/tickets/accept/${ticketId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/tickets/accept/${ticketId}`,
       {
         method: "DELETE",
         headers: {

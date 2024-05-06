@@ -28,7 +28,7 @@ const Layout: React.FC = () => {
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
-  const socket = io('http://localhost:3000');
+  const socket = io('${process.env.REACT_APP_BACKEND_URL}');
 
   if (!user) {
     return <div>Utilisateur non trouvé</div>;

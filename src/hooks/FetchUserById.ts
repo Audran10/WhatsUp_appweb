@@ -1,6 +1,6 @@
 export const FetchUserById = async (userId: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

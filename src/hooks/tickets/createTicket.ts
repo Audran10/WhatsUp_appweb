@@ -3,7 +3,7 @@ import User from "../../models/User";
 
 const createTicket = async (userId: string, message: Message, sender: User) => {
   try {
-    const response = await fetch('http://localhost:3000/tickets', {
+    const response = await fetch('${process.env.REACT_APP_BACKEND_URL}/tickets', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

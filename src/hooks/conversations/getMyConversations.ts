@@ -2,7 +2,7 @@ import Conversation from "../../models/Conversation";
 
 const getMyConversations = async (): Promise<Conversation[]> => {
   try {
-    const response = await fetch("http://localhost:3000/conversations", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/conversations`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

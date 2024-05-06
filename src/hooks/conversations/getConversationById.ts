@@ -1,7 +1,8 @@
+
 const getConversationById = async (conversationId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/conversations/${conversationId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/conversations/${conversationId}`,
       {
         method: "GET",
         headers: {

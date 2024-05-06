@@ -1,6 +1,6 @@
 export async function BanUser(userId: string) {
   try {
-    const response = await fetch(`http://localhost:3000/users/ban/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/ban/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

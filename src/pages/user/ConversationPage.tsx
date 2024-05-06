@@ -21,7 +21,7 @@ const ConversationPage: React.FC = () => {
   const [isLoading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const socket = io('http://localhost:3000');
+  const socket = io(`${process.env.REACT_APP_BACKEND_URL}`);
 
   const joinRoom = () => {
     if (socket && conversationId) {

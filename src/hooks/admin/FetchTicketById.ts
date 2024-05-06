@@ -1,6 +1,6 @@
 export const FetchTicketById = async (ticketId: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/ticket/${ticketId}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/ticket/${ticketId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
