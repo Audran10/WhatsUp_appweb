@@ -52,10 +52,6 @@ const DetailsGroupPage: React.FC = () => {
     }
   };
 
-  const onMembersChange = () => {
-    fetchConversationData();
-  };
-
   const handleUpdateGroup = () => {
     const formData = new FormData();
 
@@ -68,7 +64,6 @@ const DetailsGroupPage: React.FC = () => {
     }
 
     updateConversation(conversationId, formData).then(() => {
-      onMembersChange();
       window.location.reload();
     });
   };
@@ -115,7 +110,6 @@ const DetailsGroupPage: React.FC = () => {
         isAdmin={isAdmin}
         owned_by={conversationData?.owned_by ?? ''}
         conversationId={conversationId}
-        onMembersChange={onMembersChange}
       />
 
       <div className="flex justify-center w-full">
