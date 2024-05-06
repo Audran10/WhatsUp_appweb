@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import ButtonAddMember from "../../components/user/createConversation/ButtonAddMember";
-import InputMember from "../../components/user/createConversation/InputMember";
-import createConversation from "../../hooks/conversations/createConversation";
-import UserPicItem from "../../components/items/ConversationPicItem";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { isValidPhoneNumber } from "../../utils/utils";
+import React, { useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import SearchBar from '../../components/common/SearchBar';
+import ButtonAddMember from '../../components/user/createConversation/ButtonAddMember';
+import InputMember from '../../components/user/createConversation/InputMember';
+import createConversation from '../../hooks/conversations/createConversation';
+import UserPicItem from '../../components/items/ConversationPicItem';
 
 interface CreateConversationProps {
   setShowCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +13,6 @@ interface CreateConversationProps {
 const CreateConversation: React.FC<CreateConversationProps> = ({
   setShowCreateGroup,
 }) => {
-  const user = useSelector((state: RootState) => state.user.value);
   const [nbMembers, setNbMembers] = useState<number>(1);
   const [conversationName, setConversationName] = useState<string | undefined>(
     undefined
@@ -24,50 +21,22 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     File | undefined
   >(undefined);
   const [members, setMembers] = useState<string[]>([]);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const newUserRef = useRef<HTMLDivElement>(null);
 
   const handleAddMember = () => {
-    if (!isValidPhoneNumber(members[nbMembers - 1])) {
-      setError("Veuillez entrer un numéro de téléphone valide");
-      return;
-    }
     setNbMembers(nbMembers + 1);
-    setMembers([...members, ""]);
-    setError(undefined);
-    setIsDisabled(true);
+    setMembers([...members, '']);
   };
 
   const handleRemoveMember = () => {
     if (nbMembers > 1) {
       setNbMembers(nbMembers - 1);
       setMembers(members.slice(0, members.length - 1));
-      setError(undefined);
-      setIsDisabled(false);
     }
   };
 
   const handleInputChange = (index: number, value: string) => {
     const newMembers = [...members];
-
-    if (!isValidPhoneNumber(value)) {
-      newMembers[index] = value;
-      setIsDisabled(true);
-    } else if (value === user?.phone) {
-      newMembers[index] = value;
-      setIsDisabled(true);
-      setError("Vous ne pouvez pas vous ajouter vous-même");
-    } else if (newMembers.includes(value)) {
-      newMembers[index] = value;
-      setIsDisabled(true);
-      setError("Ce membre est déjà ajouté");
-    } else {
-      newMembers[index] = value;
-      setIsDisabled(false);
-      setError(undefined);
-    }
-
+    newMembers[index] = value;
     setMembers(newMembers);
   };
 
@@ -75,15 +44,15 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     let formData = new FormData();
 
     if (conversationName) {
-      formData.append("name", conversationName);
+      formData.append('name', conversationName);
     }
 
     members.forEach((user) => {
-      formData.append("users[]", user);
+      formData.append('users[]', user);
     });
 
     if (conversationPicture) {
-      formData.append("file", conversationPicture);
+      formData.append('file', conversationPicture);
     }
 
     createConversation(formData).then((conversation) => {
@@ -92,75 +61,52 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     });
   };
 
-  const scrollToBottom = () => {
-    if (newUserRef.current) {
-      newUserRef.current.scrollTop = newUserRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [nbMembers]);
-
   return (
-    <div className='flex flex-col h-full justify-center items-center  bg-mainWhite'>
-      <div className='flex flex-row w-full gap-8 h-[14%] p-6 items-end bg-mainGreen'>
+    <div className="h-screen justify-center items-center  bg-mainWhite">
+      <div className="flex flex-row gap-8 h-[14%] p-6 items-end bg-mainGreen">
         <button onClick={() => setShowCreateGroup(false)}>
-          <FaArrowLeft className='h-6 w-6 text-mainWhite' />
+          <FaArrowLeft className="h-6 w-6 text-mainWhite" />
         </button>
-        <h1 className='text-2xl text-mainWhite'>Nouvelle conversation</h1>
+        <h1 className="text-2xl text-mainWhite">Nouvelle conversation</h1>
       </div>
 
-      <div className='h-[86%] w-full'>
-        <UserPicItem
-          placeholder='Ajouter une photo à la conversation'
-          setConversationPicture={setConversationPicture}
+      <UserPicItem
+        placeholder="Ajouter une photo à la conversation"
+        setConversationPicture={setConversationPicture}
+      />
+
+      <SearchBar placeholder="Recherchez un nom ou un numéro" border={false} />
+
+      <div className="flex justify-center w-full mt-2 mb-8">
+        <button
+          onClick={handleCreateConversation}
+          className="bg-mainGreen text-mainWhite p-2 rounded-lg">
+          Créez la conversation
+        </button>
+      </div>
+
+      <input
+        type="text"
+        className="w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-6"
+        placeholder="Nom de la conversation (optionnel)"
+        onChange={(e) => setConversationName(e.target.value)}
+      />
+      <div className="overflow-y-auto">
+        {[...Array(nbMembers)].map((_, index) => (
+          <InputMember
+            key={index}
+            index={index}
+            value={members[index] || ''}
+            onClick={handleRemoveMember}
+            onChange={(value) => handleInputChange(index, value)}
+            placeholder={`Membre ${index + 1}`}
+          />
+        ))}
+
+        <ButtonAddMember
+          onClick={handleAddMember}
+          placeholder="Ajouter un membre"
         />
-
-        <input
-          type='text'
-          className='w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-2 mt-2'
-          placeholder='Nom de la conversation (optionnel)'
-          onChange={(e) => setConversationName(e.target.value)}
-        />
-        <div
-          className='flex flex-col max-h-[45%] w-full overflow-y-auto'
-          ref={newUserRef}
-        >
-          {[...Array(nbMembers)].map((_, index) => (
-            <InputMember
-              key={index}
-              index={index}
-              value={members[index] || ""}
-              onClick={handleRemoveMember}
-              onChange={(value) => handleInputChange(index, value)}
-              placeholder={`Membre ${index + 1}`}
-            />
-          ))}
-          <p className='text-red-400 text-base ml-2'>{error}</p>
-
-          <div className='ml-2'>
-            <ButtonAddMember
-              onClick={handleAddMember}
-              placeholder='Ajouter un membre'
-              disabled={isDisabled}
-            />
-          </div>
-        </div>
-
-        <div className='flex justify-center items-center w-full mt-4 mb-2'>
-          <button
-            onClick={handleCreateConversation}
-            className={`p-2 rounded-lg ${
-              isDisabled
-                ? "bg-secondaryWhite text-secondaryGray"
-                : "bg-mainGreen text-mainWhite"
-            }`}
-            disabled={isDisabled}
-          >
-            Créez la conversation
-          </button>
-        </div>
       </div>
     </div>
   );

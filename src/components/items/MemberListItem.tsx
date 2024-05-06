@@ -9,7 +9,6 @@ interface MemberListItemProps {
   isAdmin: boolean;
   owned_by: string;
   conversationId: string;
-  onMembersChange: () => void;
 }
 
 const MemberListItem: React.FC<MemberListItemProps> = ({
@@ -17,36 +16,29 @@ const MemberListItem: React.FC<MemberListItemProps> = ({
   isAdmin,
   owned_by,
   conversationId,
-  onMembersChange,
 }) => {
   const userDefaultPicture = `src/assets/defaultAvatar.png`;
-
-  const [members, setMembers] = useState<User[] | undefined>();
+  const [members, setMembers] = useState<User[]>([]);
 
   useEffect(() => {
-    setMembers(users);
+    setMembers(users || []);
   }, [users]);
 
-  const handleKickUser = async (kickedMemberId: string) => {
-    const newMembers = members?.filter(
+  useEffect(() => {}, [members]);
+
+  const handleKickUser = (kickedMemberId: string) => {
+    const newMembersAfterKick = members.filter(
       (member) => member._id !== kickedMemberId
     );
+    setMembers(newMembersAfterKick);
 
-    if (newMembers) {
-      const formData = new FormData();
+    const formData = new FormData();
 
-      newMembers.forEach((user) => {
-        formData.append('users[]', user.phone);
-      });
+    members.forEach((user) => {
+      formData.append('users[]', user.phone);
+    });
 
-      try {
-        await updateConversation(conversationId, formData);
-        setMembers(newMembers);
-        onMembersChange();
-      } catch (error) {
-        console.error('Failed to update conversation:', error);
-      }
-    }
+    updateConversation(conversationId, formData);
   };
 
   return (
@@ -69,7 +61,7 @@ const MemberListItem: React.FC<MemberListItemProps> = ({
             {member._id == owned_by && <TbCrown className="ml-2" />}
 
             {isAdmin && member._id != owned_by && (
-              <button onClick={async () => await handleKickUser(member._id)}>
+              <button onClick={async () => handleKickUser(member._id)}>
                 <CiCircleRemove className="text-mainRed text-2xl" />
               </button>
             )}
