@@ -1,5 +1,5 @@
-import User from "./User";
-import Message from "./Message";
+import User from './User';
+import Message from './Message';
 
 interface Conversation {
   _id: string;
@@ -11,6 +11,7 @@ interface Conversation {
   last_message: Message;
   created_at: Date;
   updated_at: Date;
+  owned_by: string;
 }
 
 export default Conversation;

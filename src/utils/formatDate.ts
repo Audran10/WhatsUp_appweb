@@ -105,4 +105,12 @@ export function formatConversationDate(date: Date) {
       });
     }
   }
+
+  return '';
+}
+export function formatDateComplete(date: Date) {
+  const dateToCompare = new Date(date);
+  return `${dateToCompare.getDate()} ${dateToCompare.toLocaleString('fr-FR', {
+    month: 'long',
+  })} ${dateToCompare.getFullYear()} à ${formatDateInHour(dateToCompare)}`;
 }

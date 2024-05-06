@@ -22,6 +22,7 @@ import i18n from './locales/i18n';
 import { initReactI18next } from 'react-i18next';
 
 initReactI18next.init(i18n);
+import { ShowDetailsGroupProvider } from './provider/ShowDetailsGroupProvider';
 
 const App: React.FC = () => {
   const persistor = persistStore(store);
@@ -36,28 +37,30 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path='/register'
-              element={<AnonymousRoute element={<RegisterPage />} />}
-            />
-            <Route
-              path='/login'
-              element={<AnonymousRoute element={<LoginPage />} />}
-            />
+        <ShowDetailsGroupProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/register"
+                element={<AnonymousRoute element={<RegisterPage />} />}
+              />
+              <Route
+                path="/login"
+                element={<AnonymousRoute element={<LoginPage />} />}
+              />
 
-            <Route path='/' element={<AuthRoute element={<Layout />} />}>
-              <Route index element={<HomePage />} />
-              <Route path='/:conversationId' element={<ConversationPage />} />
-            </Route>
+              <Route path="/" element={<AuthRoute element={<Layout />} />}>
+                <Route index element={<HomePage />} />
+                <Route path="/:conversationId" element={<ConversationPage />} />
+              </Route>
 
-            <Route
-              path='admin'
-              element={<AuthAdminRoute element={<AdminPage />} />}
-            />
-          </Routes>
-        </BrowserRouter>
+              <Route
+                path="admin"
+                element={<AuthAdminRoute element={<AdminPage />} />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </ShowDetailsGroupProvider>
       </PersistGate>
     </Provider>
   );
