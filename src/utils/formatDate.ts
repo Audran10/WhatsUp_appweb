@@ -11,13 +11,14 @@ export function isSameDay(date1: Date, date2: Date) {
 
 export function formatDateInHour(date: Date) {
   const dateToCompare = new Date(date);
-  return dateToCompare.toLocaleString("fr-FR", {
-    hour: "numeric",
-    minute: "numeric",
+  return dateToCompare.toLocaleString('fr-FR', {
+    hour: 'numeric',
+    minute: 'numeric',
   });
 }
 
 export function formatListConversationDate(date: Date) {
+  const locale = localStorage.getItem('locale');
   const today = new Date();
 
   const yesterday = new Date(today);
@@ -31,19 +32,32 @@ export function formatListConversationDate(date: Date) {
   if (isSameDay(dateToCompare, today)) {
     return formatDateInHour(dateToCompare);
   } else if (isSameDay(dateToCompare, yesterday)) {
-    return "Hier";
+    return locale === 'fr' ? 'Hier' : 'Yesterday';
   } else if (dateToCompare.getTime() > lastWeek.getTime()) {
-    return dateToCompare.toLocaleString("fr-FR", { weekday: "long" });
+    if (locale === 'fr') {
+      return dateToCompare.toLocaleString('fr-FR', { weekday: 'long' });
+    } else {
+      return dateToCompare.toLocaleString('en-EN', { weekday: 'long' });
+    }
   } else {
-    return dateToCompare.toLocaleString("fr-FR", {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    });
+    if (locale === 'fr') {
+      return dateToCompare.toLocaleString('fr-FR', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+      });
+    } else {
+      return dateToCompare.toLocaleString('en-EN', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      });
+    }
   }
 }
 
 export function formatConversationDate(date: Date) {
+  const locale = localStorage.getItem('locale');
   const today = new Date();
 
   const yesterday = new Date(today);
@@ -55,21 +69,40 @@ export function formatConversationDate(date: Date) {
   const dateToCompare = new Date(date);
 
   if (isSameDay(dateToCompare, today)) {
-    return "Aujourd'hui";
+    return locale === 'fr' ? "Aujourd'hui" : 'Today';
   } else if (isSameDay(dateToCompare, yesterday)) {
-    return "Hier";
+    return locale === 'fr' ? 'Hier' : 'Yesterday';
   } else if (dateToCompare.getTime() > lastWeek.getTime()) {
-    return dateToCompare.toLocaleString("fr-FR", { weekday: "long" });
+    if (locale === 'fr') {
+      return dateToCompare.toLocaleString('fr-FR', { weekday: 'long' });
+    } else {
+      return dateToCompare.toLocaleString('en-EN', { weekday: 'long' });
+    }
   } else if (dateToCompare.getFullYear() === today.getFullYear()) {
-    return dateToCompare.toLocaleString("fr-FR", {
-      day: "numeric",
-      month: "long",
-    });
+    if (locale === 'fr') {
+      return dateToCompare.toLocaleString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+      });
+    } else {
+      return dateToCompare.toLocaleString('en-EN', {
+        month: 'long',
+        day: 'numeric',
+      });
+    }
   } else {
-    return dateToCompare.toLocaleString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    if (locale === 'fr') {
+      return dateToCompare.toLocaleString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    } else {
+      return dateToCompare.toLocaleString('en-EN', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
+    }
   }
 }

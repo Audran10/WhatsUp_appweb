@@ -3,6 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import defaultAvatar from "../../../assets/defaultAvatar.png";
 import leaveConversation from "../../../hooks/conversations/leaveConversation";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface HeaderMessageProps {
   title: string | undefined;
@@ -10,6 +11,7 @@ interface HeaderMessageProps {
 }
 
 const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
+  const { t } = useTranslation();
   const { conversationId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const optionRef = useRef<HTMLDivElement>(null);
@@ -62,7 +64,7 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
       {isOpen && (
         <div className="absolute top-full right-1 bg-white border border-gray-200 rounded shadow-md mt-1 z-20" ref={optionRef}>
           <button onClick={leaveGroup} className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
-            Quitter le groupe
+            {t("conversation_leave")}
           </button>
         </div>
       )}

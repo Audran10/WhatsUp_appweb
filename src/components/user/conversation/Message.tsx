@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import User from "../../../models/User";
-import { IoIosArrowDown } from "react-icons/io";
-import defaultAvatar from "../../../assets/defaultAvatar.png";
-import createTicket from "../../../hooks/tickets/createTicket";
-import Message from "../../../models/Message";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { formatDateInHour, isSameDay } from "../../../utils/formatDate";
+import React, { useEffect, useRef, useState } from 'react';
+import User from '../../../models/User';
+import { IoIosArrowDown } from 'react-icons/io';
+import defaultAvatar from '../../../assets/defaultAvatar.png';
+import createTicket from '../../../hooks/tickets/createTicket';
+import Message from '../../../models/Message';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { formatDateInHour, isSameDay } from '../../../utils/formatDate';
+import { useTranslation } from 'react-i18next';
 
 interface MessageComposantProps {
   myMessage: boolean;
@@ -21,12 +22,13 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
   message,
   lastMessage,
 }) => {
+  const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user.value);
   const [showMessageOption, setShowMessageOption] = useState(false);
   const [optionIsOpen, setOptionIsOpen] = useState(false);
   const optionRef = useRef<HTMLButtonElement>(null);
 
-  const lastMessageDate = new Date(lastMessage?.created_at ?? "");
+  const lastMessageDate = new Date(lastMessage?.created_at ?? '');
   const messageDate = new Date(message.created_at);
 
   if (!user) {
@@ -59,9 +61,9 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
       !isSameDay(lastMessageDate, messageDate));
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -70,7 +72,7 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
       {myMessage ? (
         <div
           className={`flex justify-end w-[97%] h-auto ${
-            lastMessage?.sender_id === message.sender_id ? "pb-1" : "pt-4 pb-1"
+            lastMessage?.sender_id === message.sender_id ? 'pb-1' : 'pt-4 pb-1'
           }`}
         >
           <div className='flex flex-col bg-secondaryGreen rounded-xl p-2 max-w-[60%] relative'>
@@ -85,7 +87,7 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
       ) : (
         <div
           className={`flex w-full h-auto relative ${
-            shouldDisplayProfilePicture ? "pt-4 pb-1" : "pb-1 pl-11"
+            shouldDisplayProfilePicture ? 'pt-4 pb-1' : 'pb-1 pl-11'
           }`}
         >
           {shouldDisplayProfilePicture && (
@@ -113,8 +115,8 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
                 <IoIosArrowDown
                   className={`h-5 w-5 ${
                     showMessageOption
-                      ? "text-secondaryGray"
-                      : "text-transparent"
+                      ? 'text-secondaryGray'
+                      : 'text-transparent'
                   }`}
                 />
               </button>
@@ -130,7 +132,7 @@ const MessageComposant: React.FC<MessageComposantProps> = ({
               onClick={handleReport}
               ref={optionRef}
             >
-              Signaler
+              {t('report')}
             </button>
           )}
         </div>

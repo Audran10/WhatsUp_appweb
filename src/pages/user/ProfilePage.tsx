@@ -10,23 +10,29 @@ import updateMyUser from '../../hooks/users/updateMyUser';
 import { useNavigate } from 'react-router-dom';
 import { BecomeAdmin } from '../../hooks/admin/BecomeAdmin';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../locales/i18n';
 
 interface ProfilePageProps {
   setShowProfile: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.value);
   const [userPicture, setUserPicture] = useState<File | undefined>(undefined);
   const [name, setName] = useState<string>(user?.pseudo || '');
-  const [biography, setBiography] = useState<string>(
-    user?.biography || 'Salut ! J’utilise WhatsUp.'
-  );
+  const [language, setLanguage] = useState<string>(localStorage.getItem('locale') || 'fr');
 
   if (!user) {
     return <div>Utilisateur non trouvé</div>;
+  }
+
+  const handleChangeLanguage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage);
   }
 
   const handleUpdateProfile = () => {
@@ -35,9 +41,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
     if (name) {
       formData.append('pseudo', name);
     }
-    if (biography) {
-      formData.append('biography', biography);
-    }
 
     if (userPicture) {
       formData.append('file', userPicture);
@@ -45,6 +48,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
 
     updateMyUser(user?._id, formData).then((updatedUser) => {
       dispatch(setUser(updatedUser));
+
+      if(language !== localStorage.getItem('locale')) {
+        localStorage.setItem('locale', language);
+        i18n.changeLanguage(language);
+      }
+
       window.location.reload();
     });
   };
@@ -70,58 +79,73 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
   };
 
   return (
-    <div className="h-full justify-center items-center bg-secondaryWhite">
-      <div className="flex h-[14%] w-full p-6 items-end justify-between bg-mainGreen">
-        <div className="flex gap-8">
+    <div className='h-full justify-center items-center bg-secondaryWhite'>
+      <div className='flex h-[14%] w-full p-6 items-end justify-between bg-mainGreen'>
+        <div className='flex gap-8'>
           <button onClick={() => setShowProfile(false)}>
-            <FaArrowLeft className="h-6 w-6 text-mainWhite" />
+            <FaArrowLeft className='h-6 w-6 text-mainWhite' />
           </button>
-          <h1 className="text-2xl text-mainWhite">Profile</h1>
+          <h1 className='text-2xl text-mainWhite'>{t('profile')}</h1>
         </div>
 
-        <div className="flex gap-3 ml-auto">
-          <button onClick={() => handleAdmin(user._id)} className="flex">
-            <MdOutlineAdminPanelSettings className="flex h-7 w-7 text-mainWhite" />
+        <div className='flex gap-3 ml-auto'>
+          <button onClick={() => handleAdmin(user._id)} className='flex'>
+            <MdOutlineAdminPanelSettings className='flex h-7 w-7 text-mainWhite' />
           </button>
 
-          <button onClick={() => handleLogout()} className="flex">
-            <IoExitOutline className="flex h-7 w-7 text-mainWhite" />
+          <button onClick={() => handleLogout()} className='flex'>
+            <IoExitOutline className='flex h-7 w-7 text-mainWhite' />
           </button>
         </div>
       </div>
 
       <UserPicItem
-        placeholder="Ajouter une photo de profil"
+        placeholder={t('profile_add_picture')}
         picture={user.picture_url}
         setUserPicture={setUserPicture}
       />
 
+      <div className='flex justify-center gap-4 w-full mb-4'>
+        <label htmlFor='fr'>Français</label>
+        <input
+          type='radio'
+          id='fr'
+          value='fr'
+          name='language'
+          defaultChecked={i18n.language === 'fr'}
+          onChange={handleChangeLanguage}
+        />
+
+        <label htmlFor='en'>English</label>
+        <input
+          type='radio'
+          id='en'
+          value='en'
+          name='language'
+          defaultChecked={i18n.language === 'en'}
+          onChange={handleChangeLanguage}
+        />
+      </div>
+
       <InputProfileItem
-        labelName={'Votre nom'}
-        type="text"
+        labelName={t('profile_name')}
+        type='text'
         value={name}
         required={false}
         maxLength={64}
         onChangeValue={(e) => setName(e.target.value)}
       />
 
-      <div className="text-base mb-4 py-4 px-8">
-        Ce nom est votre nom d'utilisateur que vos amis verront sur WhatsUp
+      <div className='text-base mb-4 py-4 px-8'>
+        {t('profile_name_description')}
       </div>
 
-      <InputProfileItem
-        labelName={'Info'}
-        type="text"
-        value={biography}
-        required={false}
-        onChangeValue={(e) => setBiography(e.target.value)}
-      />
-
-      <div className="flex justify-center w-full">
+      <div className='flex justify-center w-full'>
         <button
-          className="bg-mainGreen text-mainWhite p-2 rounded-lg mt-2 w-32"
-          onClick={handleUpdateProfile}>
-          Enregistrer
+          className='bg-mainGreen text-mainWhite p-2 rounded-lg mt-2 w-32'
+          onClick={handleUpdateProfile}
+        >
+          {t('profile_save')}
         </button>
       </div>
     </div>
