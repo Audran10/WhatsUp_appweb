@@ -107,7 +107,7 @@ const ConversationPage: React.FC = () => {
               <MessageComposant
                 key={message._id}
                 myMessage={message.sender_id === user?._id}
-                sender={findSenderMessage(conversation, message.sender_id)}
+                sender={findSenderMessage(conversation, message.sender_id) ? findSenderMessage(conversation, message.sender_id) : null}
                 message={message}
                 lastMessage={previousMessage}
               />
