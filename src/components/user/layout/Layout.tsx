@@ -72,7 +72,7 @@ const Layout: React.FC = () => {
         });
         return updatedConversations;
       });
-  
+
       setSelectedConversations((prevConversations) => {
         const updatedConversations = prevConversations.map((conv) => {
           if (conv._id === updateConv._id) {
@@ -85,7 +85,6 @@ const Layout: React.FC = () => {
     }
     socket.on('new_message', onConversationChange);
   }, [conversations, selectedConversations]);
-  
 
   if (loading) {
     return (
@@ -138,7 +137,7 @@ const Layout: React.FC = () => {
                         ? findSenderMessage(
                             conversation,
                             conversation.last_message?.sender_id
-                          ).pseudo
+                          )?.pseudo || t('undefined_user')
                         : ''
                     }
                     lastMessage={conversation.last_message?.content}
@@ -153,7 +152,7 @@ const Layout: React.FC = () => {
       </div>
 
       <div className='flex flex-col w-[70%] bg-secondaryWhite container'>
-        <Outlet/>
+        <Outlet />
       </div>
     </div>
   );
