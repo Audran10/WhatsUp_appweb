@@ -105,31 +105,30 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
   }, [nbMembers]);
 
   return (
-    <div className='flex flex-col h-full justify-center items-center  bg-mainWhite'>
-      <div className='flex flex-row w-full gap-8 h-[14%] p-6 items-end bg-mainGreen'>
+    <div className="flex flex-col h-full justify-center items-center  bg-mainWhite">
+      <div className="flex flex-row w-full gap-8 h-[14%] p-6 items-end bg-mainGreen">
         <button onClick={() => setShowCreateGroup(false)}>
-          <FaArrowLeft className='h-6 w-6 text-mainWhite' />
+          <FaArrowLeft className="h-6 w-6 text-mainWhite" />
         </button>
-        <h1 className='text-2xl text-mainWhite'>{t('new_conversation')}</h1>
+        <h1 className="text-2xl text-mainWhite">{t('new_conversation')}</h1>
       </div>
 
-      <div className='h-[86%] w-full'>
+      <div className="h-[86%] w-full">
         <UserPicItem
           placeholder={t('new_conversation_picture')}
           setConversationPicture={setConversationPicture}
         />
 
         <input
-          type='text'
-          className='w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-2 mt-2'
+          type="text"
+          className="w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-2 mt-2"
           placeholder={t('new_conversation_name')}
           maxLength={50}
           onChange={(e) => setConversationName(e.target.value)}
         />
         <div
-          className='flex flex-col max-h-[45%] w-full overflow-y-auto'
-          ref={newUserRef}
-        >
+          className="flex flex-col max-h-[45%] w-full overflow-y-auto"
+          ref={newUserRef}>
           {[...Array(nbMembers)].map((_, index) => (
             <InputMember
               key={index}
@@ -140,9 +139,9 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
               placeholder={`${t('new_conversation_member')} ${index + 1}`}
             />
           ))}
-          <p className='text-red-400 text-base ml-2'>{error}</p>
+          <p className="text-red-400 text-base ml-2">{error}</p>
 
-          <div className='ml-2'>
+          <div className="ml-2">
             <ButtonAddMember
               onClick={handleAddMember}
               placeholder={t('new_conversation_add_member')}
@@ -151,7 +150,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
           </div>
         </div>
 
-        <div className='flex justify-center items-center w-full mt-4 mb-2'>
+        <div className="flex justify-center items-center w-full mt-4 mb-2">
           <button
             onClick={handleCreateConversation}
             className={`p-2 rounded-lg ${
@@ -159,8 +158,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
                 ? 'bg-secondaryWhite text-secondaryGray'
                 : 'bg-mainGreen text-mainWhite'
             }`}
-            disabled={isDisabled}
-          >
+            disabled={isDisabled}>
             {t('new_conversation_create')}
           </button>
         </div>

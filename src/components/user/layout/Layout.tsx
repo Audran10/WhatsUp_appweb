@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import LayoutTop from './LayoutTop';
 import SearchBar from '../../common/SearchBar';
 import LayoutDiscussionGroupCard from './LayoutDiscussionGroupCard';
@@ -16,10 +16,13 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import DetailsGroupPage from '../../../pages/user/DetailsGroup';
+import { ShowDetailsGroupContext } from '../../../provider/ShowDetailsGroupProvider';
 
 const Layout: React.FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user.value);
+  const { showDetailsGroup } = useContext(ShowDetailsGroupContext);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversations, setSelectedConversations] = useState<
     Conversation[] | []
@@ -48,7 +51,7 @@ const Layout: React.FC = () => {
       setLoading(false);
     });
     AOS.init({
-      duration: 400,
+      duration: 200,
     });
   }, []);
 
@@ -97,18 +100,36 @@ const Layout: React.FC = () => {
   return (
     <div className='flex h-full w-full'>
       <div className='flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container'>
-        {showCreateGroup && !showProfile && (
-          <div className='h-full' data-aos={'fade-right'}>
+        {showCreateGroup && !showProfile && !showDetailsGroup && (
+          <div
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
             <CreateConversation setShowCreateGroup={setShowCreateGroup} />
           </div>
         )}
-        {showProfile && !showCreateGroup && (
-          <div className='h-full' data-aos={'fade-right'}>
+        {showProfile && !showCreateGroup && !showDetailsGroup && (
+          <div
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
             <ProfilePage setShowProfile={setShowProfile} />
           </div>
         )}
 
-        {!showCreateGroup && !showProfile && (
+        {showDetailsGroup && !showCreateGroup && !showProfile && (
+          <div
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
+            <DetailsGroupPage />
+          </div>
+        )}
+
+        {!showCreateGroup && !showProfile && !showDetailsGroup && (
           <>
             <LayoutTop
               profilePicture={user.picture_url}

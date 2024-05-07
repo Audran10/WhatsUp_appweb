@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCamera } from 'react-icons/fa';
 
-interface UserPicItemProps {
+interface GroupPicItemProps {
   placeholder: string;
   picture: string;
-  setUserPicture: (file: File | undefined) => void;
+  setGroupPicture: (file: File | undefined) => void;
+  date: string;
 }
 
-export const UserPicItem: React.FC<UserPicItemProps> = ({
+export const GroupPicItem: React.FC<GroupPicItemProps> = ({
   placeholder,
   picture,
-  setUserPicture,
+  setGroupPicture,
+  date,
 }) => {
+  const { t } = useTranslation();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const userDefaultPicture = `url('src/assets/defaultAvatar.png')`;
 
@@ -30,7 +34,7 @@ export const UserPicItem: React.FC<UserPicItemProps> = ({
 
     if (file) {
       setSelectedFile(file);
-      setUserPicture(file);
+      setGroupPicture(file);
     }
   };
 
@@ -53,8 +57,9 @@ export const UserPicItem: React.FC<UserPicItemProps> = ({
           </span>
         </div>
       </div>
+      <label className="mt-4 font-medium">{t('conversation_created_at')} : {date}</label>
     </div>
   );
 };
 
-export default UserPicItem;
+export default GroupPicItem;

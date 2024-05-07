@@ -23,6 +23,9 @@
   "yesterday": "Hier",
   "report": "Signaler",
   "undefined_user": "Utilisateur inconnu",
+  "french": "Français",
+  "english": "Anglais",
+  "at": "à",
   "profile": "Profil",
   "profile_add_picture": "Ajouter une photo de profil",
   "profile_name": "Votre nom",
@@ -39,5 +42,10 @@
   "new_conversation_error_same_member": "Ce membre est déjà ajouté",
   "conversation_no_message": "Aucun message",
   "conversation_send_message": "Entrez un message",
-  "conversation_leave": "Quitter la conversation"
+  "conversation_details": "Informations de la conversation",
+  "conversation_leave": "Quitter la conversation",
+  "conversation_details_title": "Détails de la conversation",
+  "conversation_created_at": "Créé le",
+  "conversation_name": "Nom de la conversation",
+  "conversation_members": "Membres"
 }

@@ -106,7 +106,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
       />
 
       <div className='flex justify-center gap-4 w-full mb-4'>
-        <label htmlFor='fr'>Français</label>
+        <label htmlFor='fr'>{t('french')}</label>
         <input
           type='radio'
           id='fr'
@@ -116,7 +116,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ setShowProfile }) => {
           onChange={handleChangeLanguage}
         />
 
-        <label htmlFor='en'>English</label>
+        <label htmlFor='en'>{t('english')}</label>
         <input
           type='radio'
           id='en'
