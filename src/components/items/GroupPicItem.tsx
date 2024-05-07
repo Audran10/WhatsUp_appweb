@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCamera } from 'react-icons/fa';
 
 interface GroupPicItemProps {
@@ -14,6 +15,7 @@ export const GroupPicItem: React.FC<GroupPicItemProps> = ({
   setGroupPicture,
   date,
 }) => {
+  const { t } = useTranslation();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const userDefaultPicture = `url('src/assets/defaultAvatar.png')`;
 
@@ -55,7 +57,7 @@ export const GroupPicItem: React.FC<GroupPicItemProps> = ({
           </span>
         </div>
       </div>
-      <label className="mt-4 font-medium">Créé le : {date}</label>
+      <label className="mt-4 font-medium">{t('conversation_created_at')} : {date}</label>
     </div>
   );
 };

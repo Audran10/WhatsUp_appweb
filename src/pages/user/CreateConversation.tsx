@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import ButtonAddMember from '../../components/user/createConversation/ButtonAddMember';
 import InputMember from '../../components/user/createConversation/InputMember';
@@ -45,6 +45,8 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
     if (nbMembers > 1) {
       setNbMembers(nbMembers - 1);
       setMembers(members.slice(0, members.length - 1));
+      setError(undefined);
+      setIsDisabled(false);
     }
   };
 
@@ -91,6 +93,16 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
       window.location.href = `/${conversation._id}`;
     });
   };
+
+  const scrollToBottom = () => {
+    if (newUserRef.current) {
+      newUserRef.current.scrollTop = newUserRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [nbMembers]);
 
   return (
     <div className="flex flex-col h-full justify-center items-center  bg-mainWhite">

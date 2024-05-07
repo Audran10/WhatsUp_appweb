@@ -23,6 +23,9 @@
   "yesterday": "Yesterday",
   "report": "Report",
   "undefined_user": "Undefined user",
+  "french": "French",
+  "english": "English",
+  "at": "at",
   "profile": "Profile",
   "profile_add_picture": "Add a profile picture",
   "profile_name": "Your name",
@@ -39,5 +42,10 @@
   "new_conversation_error_same_member": "This member is already added",
   "conversation_no_message": "No messages",
   "conversation_send_message": "Enter a message",
-  "conversation_leave": "Leave conversation"
+  "conversation_details": "Conversation details",
+  "conversation_leave": "Leave conversation",
+  "conversation_details_title": "Conversation details",
+  "conversation_created_at": "Created at",
+  "conversation_name": "Conversation name",
+  "conversation_members": "Members"
 }

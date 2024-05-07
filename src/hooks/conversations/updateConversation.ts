@@ -6,7 +6,7 @@ const updateConversation = async (
 ): Promise<Conversation> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/conversations/${conversationId}/modify`,
+      `${import.meta.env.VITE_BACKEND_URL}/conversations/${conversationId}/modify`,
       {
         method: 'PATCH',
         headers: {

@@ -14,8 +14,10 @@ import Conversation from '../../models/Conversation';
 import { formatDateComplete } from '../../utils/formatDate';
 import User from '../../models/User';
 import updateConversation from '../../hooks/conversations/updateConversation';
+import { useTranslation } from 'react-i18next';
 
 const DetailsGroupPage: React.FC = () => {
+  const { t } = useTranslation();
   const { conversationId } = useParams();
   const navigate = useNavigate();
   const [conversationData, setConversationData] = useState<Conversation>();
@@ -75,7 +77,7 @@ const DetailsGroupPage: React.FC = () => {
           <button onClick={() => setShowDetailsGroup(false)}>
             <FaArrowLeft className="h-6 w-6 text-mainWhite" />
           </button>
-          <h1 className="text-2xl text-mainWhite">Detail</h1>
+          <h1 className="text-2xl text-mainWhite">{t('conversation_details_title')}</h1>
         </div>
         <div className="flex gap-3 ml-auto">
           <button
@@ -90,14 +92,14 @@ const DetailsGroupPage: React.FC = () => {
         </div>
       </div>
       <GroupPicItem
-        placeholder="Ajouter une photo à la conversation"
+        placeholder={t('new_conversation_picture')}
         picture={conversationData?.picture_url ?? ''}
         date={formatDateComplete(new Date(date))}
         setGroupPicture={setConversationPicture}
       />
 
       <InputProfileItem
-        labelName={'Nom de la conversation'}
+        labelName={t('conversation_name')}
         type="text"
         value={name}
         required={false}
@@ -116,7 +118,7 @@ const DetailsGroupPage: React.FC = () => {
         <button
           className="bg-mainGreen text-mainWhite p-2 rounded-lg mt-2 w-32"
           onClick={handleUpdateGroup}>
-          Enregistrer
+          {t('profile_save')}
         </button>
       </div>
     </div>

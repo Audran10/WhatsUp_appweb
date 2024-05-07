@@ -108,7 +108,15 @@ export function formatConversationDate(date: Date) {
 }
 export function formatDateComplete(date: Date) {
   const dateToCompare = new Date(date);
-  return `${dateToCompare.getDate()} ${dateToCompare.toLocaleString('fr-FR', {
-    month: 'long',
-  })} ${dateToCompare.getFullYear()} à ${formatDateInHour(dateToCompare)}`;
+  if (localStorage.getItem('locale') === 'fr') {
+    return `${dateToCompare.getDate()} ${dateToCompare.toLocaleString('fr-FR', {
+      month: 'long',
+    })} ${dateToCompare.getFullYear()} à ${formatDateInHour(dateToCompare)}`;
+  } else {
+    return `${dateToCompare.toLocaleString('en-EN', {
+      month: 'long',
+    })} ${dateToCompare.getDate()}, ${dateToCompare.getFullYear()} at ${formatDateInHour(
+      dateToCompare
+    )}`;
+  }
 }

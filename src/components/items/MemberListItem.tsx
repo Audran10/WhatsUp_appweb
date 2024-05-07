@@ -3,6 +3,7 @@ import User from '../../models/User';
 import { TbCrown } from 'react-icons/tb';
 import updateConversation from '../../hooks/conversations/updateConversation';
 import { CiCircleRemove } from 'react-icons/ci';
+import { useTranslation } from 'react-i18next';
 
 interface MemberListItemProps {
   users: User[] | undefined;
@@ -17,6 +18,7 @@ const MemberListItem: React.FC<MemberListItemProps> = ({
   owned_by,
   conversationId,
 }) => {
+  const { t } = useTranslation();
   const userDefaultPicture = `src/assets/defaultAvatar.png`;
   const [members, setMembers] = useState<User[]>([]);
 
@@ -43,7 +45,7 @@ const MemberListItem: React.FC<MemberListItemProps> = ({
 
   return (
     <div className="py-4 px-8 mb-4 bg-mainWhite shadow-md">
-      <label className="font-medium">Membres</label>
+      <label className="font-medium">{t('conversation_members')}</label>
       <div className="mt-2 overflow-y-auto max-h-48">
         {members?.map((member) => (
           <div key={member._id} className="flex items-center py-2">

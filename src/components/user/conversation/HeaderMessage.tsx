@@ -72,12 +72,12 @@ const HeaderMessage: React.FC<HeaderMessageProps> = ({ title, picture }) => {
           <button
             onClick={() => setShowDetailsGroup && setShowDetailsGroup(true)}
             className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
-            Information du groupe
+            {t('conversation_details')}
           </button>
           <button
             onClick={leaveGroup}
             className="block w-full py-2 px-4 text-sm text-left text-gray-800 hover:bg-gray-100">
-            Quitter le groupe
+            {t('conversation_leave')}
           </button>
         </div>
       )}
