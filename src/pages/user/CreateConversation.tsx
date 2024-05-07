@@ -111,6 +111,7 @@ const CreateConversation: React.FC<CreateConversationProps> = ({
           type="text"
           className="w-full p-4 text-sm text-mainGray bg-secondaryWhite focus:outline-none mb-2 mt-2"
           placeholder={t('new_conversation_name')}
+          maxLength={50}
           onChange={(e) => setConversationName(e.target.value)}
         />
         <div

@@ -31,7 +31,7 @@ const Layout: React.FC = () => {
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
-  const socket = io('${process.env.REACT_APP_BACKEND_URL}');
+  const socket = io(`${import.meta.env.VITE_BACKEND_URL}`);
 
   if (!user) {
     return <div>Utilisateur non trouvé</div>;
@@ -91,37 +91,40 @@ const Layout: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen w-full bg-mainBeige">
-        <ClipLoader color="#99999e" size={50} />
+      <div className='flex justify-center items-center h-screen w-full bg-mainBeige'>
+        <ClipLoader color='#99999e' size={50} />
       </div>
     );
   }
 
   return (
-    <div className="flex h-full w-full">
-      <div className="flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container">
+    <div className='flex h-full w-full'>
+      <div className='flex flex-col h-full w-[30%] border-r-[1px] border-stone-200 bg-mainWhite container'>
         {showCreateGroup && !showProfile && !showDetailsGroup && (
           <div
-            className="h-full"
-            data-aos-easing="linear"
-            data-aos={'fade-right'}>
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
             <CreateConversation setShowCreateGroup={setShowCreateGroup} />
           </div>
         )}
         {showProfile && !showCreateGroup && !showDetailsGroup && (
           <div
-            className="h-full"
-            data-aos-easing="linear"
-            data-aos={'fade-right'}>
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
             <ProfilePage setShowProfile={setShowProfile} />
           </div>
         )}
 
         {showDetailsGroup && !showCreateGroup && !showProfile && (
           <div
-            className="h-full"
-            data-aos-easing="linear"
-            data-aos={'fade-right'}>
+            className='h-full'
+            data-aos-easing='linear'
+            data-aos={'fade-right'}
+          >
             <DetailsGroupPage />
           </div>
         )}
@@ -136,7 +139,7 @@ const Layout: React.FC = () => {
 
             <SearchBar onChange={handleChange} placeholder={t('search')} />
 
-            <div className="container overflow-y-auto">
+            <div className='container overflow-y-auto'>
               {selectedConversations
                 .slice()
                 .sort(
@@ -155,7 +158,7 @@ const Layout: React.FC = () => {
                         ? findSenderMessage(
                             conversation,
                             conversation.last_message?.sender_id
-                          ).pseudo
+                          )?.pseudo || t('undefined_user')
                         : ''
                     }
                     lastMessage={conversation.last_message?.content}
@@ -169,7 +172,7 @@ const Layout: React.FC = () => {
         )}
       </div>
 
-      <div className="flex flex-col w-[70%] bg-secondaryWhite container">
+      <div className='flex flex-col w-[70%] bg-secondaryWhite container'>
         <Outlet />
       </div>
     </div>

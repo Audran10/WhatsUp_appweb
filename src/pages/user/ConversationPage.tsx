@@ -21,7 +21,7 @@ const ConversationPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const socket = io(`${process.env.REACT_APP_BACKEND_URL}`);
+  const socket = io(`${import.meta.env.VITE_BACKEND_URL}`);
 
   const joinRoom = () => {
     if (socket && conversationId) {
@@ -107,7 +107,7 @@ const ConversationPage: React.FC = () => {
               <MessageComposant
                 key={message._id}
                 myMessage={message.sender_id === user?._id}
-                sender={findSenderMessage(conversation, message.sender_id)}
+                sender={findSenderMessage(conversation, message.sender_id) ? findSenderMessage(conversation, message.sender_id) : null}
                 message={message}
                 lastMessage={previousMessage}
               />
